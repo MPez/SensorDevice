@@ -7,25 +7,22 @@ Ext.define('SensorDevice.controller.SensorDevices', {
         },
         control: {
             sensorlistview: {
-                itemDiscloseCommand: 'onItemDiscloseCommand'
+                itemDiscloseCommand: 'onItemDiscloseCommand',
+                backButtonCommand: 'onBackButtonCommand'
             }
         }
     },
     
     onItemDiscloseCommand: function(list, index) {
         console.log('onItemTapCommand');
-        if (index == 0) {
-            //code
-        }
-        else if (index == 1) {
-            //code
-        }
-        else if (index == 2) {
-            //code
-        }
-        else if (index == 3) {
-            //code
-        }
+        
+        list.setActiveItem(index+1);
+    },
+    
+    onBackButtonCommand: function(list) {
+        console.log('onBackButtonCommand');
+        
+        list.setActiveItem(0);
     },
     
     //called when the Application is launched, remove if not needed

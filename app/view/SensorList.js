@@ -1,17 +1,26 @@
 Ext.define('SensorDevice.view.SensorList', {
-    extend: 'Ext.navigation.View',
+    extend: 'Ext.Panel',
     requires: [
-        'Ext.dataview.List'
+        'Ext.dataview.List',
+        'SensorDevice.view.BackButton'
     ],
     alias: 'widget.sensorlist',
     
     config: {
         height: '100%',
+        layout: {
+            type: 'card',
+            animation: 'fade'
+        },
         
         items: [
             {
-                title: 'Sensor Device List',
                 items: [
+                    {
+                        xtype: 'titlebar',
+                        docked: 'top',
+                        title: 'Sensor Device List'
+                    },
                     {
                         xtype: 'list',
                         itemId: 'sensorList',
@@ -21,6 +30,62 @@ Ext.define('SensorDevice.view.SensorList', {
                         onItemDisclosure: true
                     }
                 ]
+            },
+            {
+                items: [
+                    {
+                        xtype: 'titlebar',
+                        docked: 'top',
+                        title: 'File Demo',
+                        items: [
+                            {
+                                xtype: 'backbutton'
+                            }
+                        ]
+                    },
+                ]
+            },
+            {
+                items: [
+                    {
+                        xtype: 'titlebar',
+                        docked: 'top',
+                        title: 'Camera Demo',
+                        items: [
+                            {
+                                xtype: 'backbutton'
+                            }
+                        ]
+                    },
+                ]
+            },
+            {
+                items: [
+                    {
+                        xtype: 'titlebar',
+                        docked: 'top',
+                        title: 'Contacts Demo',
+                        items: [
+                            {
+                                xtype: 'backbutton'
+                            }
+                        ]
+                    },
+                ]
+            },
+            {
+                items: [
+                    {
+                        xtype: 'titlebar',
+                        docked: 'top',
+                        title: 'Media Demo',
+                        items: [
+                            {
+                                xtype: 'backbutton'
+                            }
+                        ]
+                    },
+                ]
             }
         ],
         
@@ -29,6 +94,11 @@ Ext.define('SensorDevice.view.SensorList', {
                 delegate: '#sensorList',
                 event: 'disclose',
                 fn: 'onItemDisclose'
+            },
+            {
+                delegate: '#backButton',
+                event: 'tap',
+                fn: 'onBackButtonTap'
             }
         ]
     },
@@ -37,5 +107,11 @@ Ext.define('SensorDevice.view.SensorList', {
         console.log('onItemDisclose');
         
         this.fireEvent('itemDiscloseCommand', this, index);
+    },
+    
+    onBackButtonTap: function(scope, e, eOpts) {
+        console.log('onBackButtonTap');
+        
+        this.fireEvent('backButtonCommand', this);
     }
 });
