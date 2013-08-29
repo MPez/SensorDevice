@@ -35,6 +35,12 @@
     },
     "app.scss.tpl.merge": {
       "3d3f6b023c31a4e49cd626dd27cff9474aff32d7": "eJx9kL1uAyEQhHs/xXRnS8nRx40lK0Xq8wusYc8QceyJH5/99gHsOh3MDLMfqxQuljGL97K5cEPeBN4FTnDLKjEjV9vwTMVnTBy0JVykaNuMhUf8zHhKAUXGtThvaslOKRACb6/MByIvcud+AwXTO8mY9jBCtoDzNEECsqyQudtXStzl/Wadtq3SJZCPTOYJF7Qvhk09vEpoXcffVCtm5/kw7k5v+iF15M/ckNX7H8Pxf1+R9zXTZp5LyrJAi2HcpG7FcuRx7N73g5bVV60il9SXV8GdrhSLe7jw1UKnN2rX90NJHIfD8Q/mSX+o"
+    },
+    "{modelFileName}.js.tpl.merge": {
+      "b440abe61f1cfb3bbc31c9554696b4c7e9e2c329": "eJxtUsFugzAMvfMVVqUqtEXQXaF0h2nX/QDikIJpo6UBkdAxRfn3ObCiVasPsbH9Hi923kcT19gIhSGz17ZG+cGvqDteoYutotixCGwAZDgaVHUKzJ64xjfJtabiVJqOqlWNOKe/3d4agbLWKRR2veS83bgcUMdzGXIIm0FVRrSKoim3+UOykLU9hDfeQ4+GMEUZQcd74/EzKNadFCZkEdtEICi9z8gd5q5YojqbSwa7nXjGPsvqoSHcBChEeSdM2SZ7CiAlcTfoS2jBjyqFptiTLPPdTfFLCe4J0gX/UkQ09Mq77LHoNuHDsP7Qrd3BdNKPJV/NxdXxAXsXxZY9zsKY9d4xcLYYhapxhDyHsWoHZeAVGAPqiVjpDgn94BjYNSRbOEmuPkHSSwHTktJ6qBCu2J9xWrwUFa3iKxk09oC1oI9tQhoXRWUw391P5AeOxqsQ"
+    },
+    "{controllerFileName}.js.tpl.merge": {
+      "7cd8d1cf12515ca525732931d6b775e3f7924ad9": "eJx1j0EKwyAQRfeeYnYmIMk+XZXSbe8gOjaCGSWxbSB49xoTQij0L8ZR3p8/3ufYaDSWsOKL8hRH7xyODzngFKTC1Py8Ji5gYZCFc0TSHfB7niFDaG4HyEUhSsl2Y5/dblo1opnO9wNdlcTR7sH/UXYylNK2SuZ8DZ8eCWKPcA3BWSWj9QR2AidfpHrUIi8x+DeCNUA+AiFq1GXGhnRg8rHaqvy1+rTCFspSfWFfyCxXmA\u003d\u003d"
     }
   },
   "targets": {
@@ -276,6 +282,41 @@
         "library": "core",
         "controllerNamespace": "SensorDevice.controller",
         "appStores": ""
+      }
+    },
+    "app/model/sensor:string.js": {
+      "source": "{modelFileName}.js.tpl.merge",
+      "version": "b440abe61f1cfb3bbc31c9554696b4c7e9e2c329",
+      "parameters": {
+        "appName": "SensorDevice",
+        "modelNamespace": "SensorDevice.model",
+        "baseClass": "Ext.data.Model",
+        "modelFileName": "sensor:string",
+        "name": "sensor:string",
+        "fields": "Sensor:auto:null"
+      }
+    },
+    "app/model/Sensor.js": {
+      "source": "{modelFileName}.js.tpl.merge",
+      "version": "b440abe61f1cfb3bbc31c9554696b4c7e9e2c329",
+      "parameters": {
+        "appName": "SensorDevice",
+        "modelNamespace": "SensorDevice.model",
+        "baseClass": "Ext.data.Model",
+        "modelFileName": "Sensor",
+        "name": "Sensor",
+        "fields": "name:string:null"
+      }
+    },
+    "app/controller/SensorDevices.js": {
+      "source": "{controllerFileName}.js.tpl.merge",
+      "version": "7cd8d1cf12515ca525732931d6b775e3f7924ad9",
+      "parameters": {
+        "appName": "SensorDevice",
+        "controllerName": "SensorDevices",
+        "controllerFileName": "SensorDevices",
+        "name": "SensorDevices",
+        "controllerNamespace": "SensorDevice.controller"
       }
     }
   }
