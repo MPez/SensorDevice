@@ -2,9 +2,7 @@ Ext.define('SensorDevice.view.Main', {
     extend: 'Ext.tab.Panel',
     xtype: 'main',
     requires: [
-        'Ext.TitleBar',
-        'Ext.dataview.List',
-        'SensorDevice.view.SensorList'
+        'SensorDevice.view.Home'
     ],
     config: {
         tabBarPosition: 'bottom',
@@ -13,25 +11,16 @@ Ext.define('SensorDevice.view.Main', {
             {
                 title: 'Home',
                 iconCls: 'home',
-                
-                //styleHtmlContent: true,
-                //scrollable: true,
 
-                items: [
-                    {
-                        xtype: 'sensorlist'
-                    }
-                ]
+                items:
+                { xtype: 'home' }
             },
             {
                 title: 'MyNotes',
                 iconCls: 'star',
                 
-                items: [
-                    {
-                        xtype: 'mynotes'
-                    }
-                ]
+                items:
+                { xtype: 'mynotes' }
             }
         ]
     }

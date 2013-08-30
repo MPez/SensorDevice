@@ -1,28 +1,61 @@
 Ext.define('SensorDevice.controller.SensorDevices', {
     extend: 'Ext.app.Controller',
+    requires: [
+        'Ext.device.Camera'
+    ],
     
     config: {
         refs: {
-            sensorlistview: 'sensorlist'
+            homeView: 'home',
+            cameraDemoView: 'camerademo'
         },
         control: {
-            sensorlistview: {
+            homeView: {
                 itemDiscloseCommand: 'onItemDiscloseCommand',
                 backButtonCommand: 'onBackButtonCommand'
+            },
+            cameraDemoView: {
+                cameraButtonCommand: 'onCameraButtonCommand',
+                galleryButtonCommand: 'onGalleryButtonCommand'
             }
         }
     },
     
-    onItemDiscloseCommand: function(list, index) {
-        console.log('onItemTapCommand');
+    onItemDiscloseCommand: function(home, index) {
+        console.log('onItemDIscloseCommand');
         
-        list.setActiveItem(index+1);
+        home.setActiveItem(index+1);
     },
     
-    onBackButtonCommand: function(list) {
+    onBackButtonCommand: function(home) {
         console.log('onBackButtonCommand');
         
-        list.setActiveItem(0);
+        home.setActiveItem(0);
+    },
+    
+    onCameraButtonCommand: function() {
+        console.log('onCameraButtonCommand');
+        
+        var scope = this;
+        
+        Ext.device.Camera.capture({
+            success: scope.onCaptureSuccess(),
+            quality: 85,
+            source: 'camera',
+            destination: 'file'
+        });
+    },
+    
+    onGalleryButtonCommand: function() {
+        console.log('onGalleryButtonCommand');
+        
+        
+    },
+    
+    onCaptureSuccess: function() {
+        console.log('onCaptureSuccess');
+        
+        
     },
     
     //called when the Application is launched, remove if not needed
