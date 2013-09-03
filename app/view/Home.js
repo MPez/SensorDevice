@@ -13,11 +13,13 @@ Ext.define('SensorDevice.view.Home', {
     alias: 'widget.home',
     
     config: {
+        styleHtmlContent: true,
         height: '100%',
         layout: {
             type: 'card',
             animation: 'fade'
         },
+        setScrollable: true,
         
         items: [
             {

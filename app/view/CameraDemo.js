@@ -1,13 +1,13 @@
 Ext.define('SensorDevice.view.CameraDemo', {
     extend: 'Ext.Panel',
     requires: [
-        'Ext.TitleBar',
-        'Ext.Img'
+        'Ext.TitleBar'
     ],
     alias: 'widget.camerademo',
     
     config: {
         styleHtmlContent: true,
+        
         items: [
             {
                 xtype: 'titlebar',
@@ -21,48 +21,79 @@ Ext.define('SensorDevice.view.CameraDemo', {
             },
             {
                 xtype: 'button',
-                itemId: 'cameraButton',
-                text: 'Take a picture',
+                itemId: 'cameraButtonSencha',
+                text: 'Take a picture using Sencha\'s APIs',
                 margin: '0 0 10 0',
                 height: 40,
             },
             {
                 xtype: 'button',
-                itemId: 'galleryButton',
-                text: 'Load from gallery',
+                itemId: 'galleryButtonSencha',
+                text: 'Load from gallery using Sencha\'s APIs',
+                margin: '0 0 50 0',
                 height: 40,
             },
             {
-                xtype: 'img',
-                itemId: 'cameraImage',
-                height: 144,
-                width: 144
+                xtype: 'button',
+                itemId: 'cameraButtonCordova',
+                text: 'Take a picture using Cordova\'s APIs',
+                margin: '0 0 10 0',
+                height: 40,
+            },
+            {
+                xtype: 'button',
+                itemId: 'galleryButtonCordova',
+                text: 'Load from gallery using Cordova\'s APIs',
+                margin: '0 0 20 0',
+                height: 40,
             }
         ],
         
         listeners: [
             {
-                delegate: '#cameraButton',
+                delegate: '#cameraButtonSencha',
                 event: 'tap',
-                fn: 'onCameraButtonTap'
+                fn: 'onCameraButtonTapSencha'
             },
             {
-                delegate: '#galleryButton',
+                delegate: '#galleryButtonSencha',
                 event: 'tap',
-                fn: 'onGalleryButtonTap'
+                fn: 'onGalleryButtonTapSencha'
+            },
+            {
+                delegate: '#cameraButtonCordova',
+                event: 'tap',
+                fn: 'onCameraButtonTapCordova'
+            },
+            {
+                delegate: '#galleryButtonCordova',
+                event: 'tap',
+                fn: 'onGalleryButtonTapCordova'
             }
         ]
     },
     
-    onCameraButtonTap: function(scope, e, eOpts) {
-        console.log('onCameraButtonTap');
+    onCameraButtonTapSencha: function(scope, e, eOpts) {
+        console.log('onCameraButtonTapSencha');
         
-        this.fireEvent('cameraButtonCommand', this);
+        this.fireEvent('cameraButtonCommandSencha', this);
     },
     
-    onGalleryButtonTap: function(scope, e, eOpts) {
-        console.log('onGalleryButtonTap');
+    onGalleryButtonTapSencha: function(scope, e, eOpts) {
+        console.log('onGalleryButtonTapSencha');
         
-        this.fireEvent('galleryButtonCommand', this);
+        this.fireEvent('galleryButtonCommandSencha', this);
+    },
+    
+    onCameraButtonTapCordova: function(scope, e, eOpts) {
+        console.log('onCameraButtonTapCordova');
+        
+        this.fireEvent('cameraButtonCommandCordova', this);
+    },
+    
+    onGalleryButtonTapCordova: function(scope, e, eOpts) {
+        console.log('onGalleryButtonTapCordova');
+        
+        this.fireEvent('galleryButtonCommandCordova', this);
     }
 });

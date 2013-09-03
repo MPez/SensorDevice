@@ -6,6 +6,7 @@ Ext.define('SensorDevice.view.FileDemo', {
     alias: 'widget.filedemo',
     
     config: {
+        
         items: [
             {
                 xtype: 'titlebar',

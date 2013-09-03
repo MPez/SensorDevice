@@ -2,7 +2,8 @@ Ext.define('SensorDevice.view.Main', {
     extend: 'Ext.tab.Panel',
     xtype: 'main',
     requires: [
-        'SensorDevice.view.Home'
+        'SensorDevice.view.Home',
+        'SensorDevice.view.GalleryDemo'
     ],
     config: {
         tabBarPosition: 'bottom',
@@ -21,6 +22,13 @@ Ext.define('SensorDevice.view.Main', {
                 
                 items:
                 { xtype: 'mynotes' }
+            },
+            {
+                title: 'Gallery',
+                iconCls: 'star',
+                
+                items:
+                { xtype: 'gallerydemo' }
             }
         ]
     }

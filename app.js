@@ -23,12 +23,13 @@ Ext.application({
     name: 'SensorDevice',
     requires: [
         'Ext.MessageBox',
-        'org.s2.syncEngine.SyncManager',
-        'org.s2.syncEngine.basicSyncStore.SyncStore'
+        //'org.s2.syncEngine.SyncManager',
+        //'org.s2.syncEngine.basicSyncStore.SyncStore'
     ],
     
     models: [
         'Sensor',
+        'Picture',
         //'AuthorSync',
         //'NoteSync',
         //'Device'
@@ -36,6 +37,7 @@ Ext.application({
     
     stores: [
         'Sensors',
+        'Pictures',
         //'DevicesSync'
     ],
     
@@ -48,6 +50,9 @@ Ext.application({
         'Main',
         'SensorList',
         'MyNotes',
+        'GalleryDemo',
+        'PictureList',
+        'PictureItem'
         //'NotesListSync',
         //'NoteEditorSync',
         ///'AuthorsListSync',
