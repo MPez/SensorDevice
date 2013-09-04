@@ -13,7 +13,7 @@ Ext.define("SensorDevice.model.NoteSync", {
         validations: [
             {type: 'presence', field: 'author'},
             {type: 'presence', field: 'dateCreated'},
-            {type: 'presence', field: 'title', message: 'Please enter a title for this note.'},
+            {type: 'presence', field: 'title', message: 'Please enter a title for this note.'}
         ]
     }
 });

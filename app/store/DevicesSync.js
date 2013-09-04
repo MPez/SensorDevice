@@ -16,6 +16,6 @@ Ext.define("SensorDevice.store.DevicesSync", {
             type: "sql",
             database: "MyDb"
             
-        },
+        }
     }
 });

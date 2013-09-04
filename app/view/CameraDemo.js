@@ -21,79 +21,43 @@ Ext.define('SensorDevice.view.CameraDemo', {
             },
             {
                 xtype: 'button',
-                itemId: 'cameraButtonSencha',
+                itemId: 'cameraButton',
                 text: 'Take a picture using Sencha\'s APIs',
                 margin: '0 0 10 0',
-                height: 40,
+                height: 40
             },
             {
                 xtype: 'button',
-                itemId: 'galleryButtonSencha',
+                itemId: 'galleryButton',
                 text: 'Load from gallery using Sencha\'s APIs',
                 margin: '0 0 50 0',
-                height: 40,
-            },
-            {
-                xtype: 'button',
-                itemId: 'cameraButtonCordova',
-                text: 'Take a picture using Cordova\'s APIs',
-                margin: '0 0 10 0',
-                height: 40,
-            },
-            {
-                xtype: 'button',
-                itemId: 'galleryButtonCordova',
-                text: 'Load from gallery using Cordova\'s APIs',
-                margin: '0 0 20 0',
-                height: 40,
+                height: 40
             }
         ],
         
         listeners: [
             {
-                delegate: '#cameraButtonSencha',
+                delegate: '#cameraButton',
                 event: 'tap',
-                fn: 'onCameraButtonTapSencha'
+                fn: 'onCameraButtonTap'
             },
             {
-                delegate: '#galleryButtonSencha',
+                delegate: '#galleryButton',
                 event: 'tap',
-                fn: 'onGalleryButtonTapSencha'
-            },
-            {
-                delegate: '#cameraButtonCordova',
-                event: 'tap',
-                fn: 'onCameraButtonTapCordova'
-            },
-            {
-                delegate: '#galleryButtonCordova',
-                event: 'tap',
-                fn: 'onGalleryButtonTapCordova'
+                fn: 'onGalleryButtonTap'
             }
         ]
     },
     
-    onCameraButtonTapSencha: function(scope, e, eOpts) {
-        console.log('onCameraButtonTapSencha');
+    onCameraButtonTap: function(scope, e, eOpts) {
+        console.log('onCameraButtonTap');
         
-        this.fireEvent('cameraButtonCommandSencha', this);
+        this.fireEvent('cameraButtonCommand', this);
     },
     
-    onGalleryButtonTapSencha: function(scope, e, eOpts) {
-        console.log('onGalleryButtonTapSencha');
+    onGalleryButtonTap: function(scope, e, eOpts) {
+        console.log('onGalleryButtonTap');
         
-        this.fireEvent('galleryButtonCommandSencha', this);
-    },
-    
-    onCameraButtonTapCordova: function(scope, e, eOpts) {
-        console.log('onCameraButtonTapCordova');
-        
-        this.fireEvent('cameraButtonCommandCordova', this);
-    },
-    
-    onGalleryButtonTapCordova: function(scope, e, eOpts) {
-        console.log('onGalleryButtonTapCordova');
-        
-        this.fireEvent('galleryButtonCommandCordova', this);
+        this.fireEvent('galleryButtonCommand', this);
     }
 });

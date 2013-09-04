@@ -2,7 +2,7 @@ Ext.define("SensorDevice.model.Device", {
     extend: "Ext.data.Model",
     requires: [
         "Ext.data.proxy.LocalStorage",
-        "Ext.data.proxy.Sql",
+        "Ext.data.proxy.Sql"
     ],
     
     config: {

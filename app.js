@@ -22,34 +22,29 @@ Ext.Loader.setPath({
 Ext.application({
     name: 'SensorDevice',
     requires: [
-        'Ext.MessageBox',
+        'Ext.MessageBox'
         //'org.s2.syncEngine.SyncManager',
         //'org.s2.syncEngine.basicSyncStore.SyncStore'
     ],
     
     models: [
         'Sensor',
-        'Picture',
-        //'AuthorSync',
-        //'NoteSync',
-        //'Device'
+        'Picture'
     ],
     
     stores: [
         'Sensors',
-        'Pictures',
-        //'DevicesSync'
+        'Pictures'
     ],
     
     controllers: [
-        'SensorDevices',
-        //'NotesSync'
+        'SensorDevices'
     ],
 
     views: [
         'Main',
         'MyNotes',
-        'GalleryDemo',
+        'GalleryDemo'
         //'NotesListSync',
         //'NoteEditorSync',
         ///'AuthorsListSync',
@@ -96,67 +91,9 @@ Ext.application({
         console.log('mainLaunch');
         
         
-        /*
-        var notesListSync = {
-            xtype: "noteslistsync"
-        };
-        
-        var noteEditorSync = {
-            xtype: "noteeditorsync"
-        };
-        
-        var authorEditorSync = {
-            xtype: "authoreditorsync"
-        };
-        
-        var deviceInfoEditor = {
-            xtype: "deviceinfoeditor"
-        };
-        
-        /*
-         * creazione dello storeManager da utilizzarsi per la gestione degli store
-         *
-        var storeManager = Ext.create("SyncManager", {
-            dbName: "MyDb",
-            appName: this.getName(),
-            deviceID: "Marco"
-        });
-        
-        /*
-         * creazione dello store relativo agli autori
-         *
-        storeManager.createSyncStore({
-            model: "SensorDevice.model.AuthorSync",
-            tableID: "authorID",
-            remoteURL: 'http://srv1.soluzioni-sw.it/NotesWeb/Author.aspx',
-            storeId: "Authors"
-        });
-        
-        /*
-         * creazione dello store relativo alle note
-         *
-        storeManager.createSyncStore({
-            model: "SensorDevice.model.NoteSync",
-            tableID: "noteID",
-            remoteURL: 'http://srv1.soluzioni-sw.it/NotesWeb/Note.aspx',
-            storeId: "Notes"
-        });
-        
-        /*
-         * impostazione dello storeManager come proprietà del controller
-         *
-        var controller = this.getController("NotesSync");
-        controller.setManager(storeManager);
-        */
-        
         // Initialize the main view
         Ext.Viewport.add([
-            Ext.create('SensorDevice.view.Main'),
-            //notesListSync,
-            //noteEditorSync,
-            //authorEditorSync,
-            //deviceInfoEditor
-            
+            Ext.create('SensorDevice.view.Main') 
         ]);
     },
 
