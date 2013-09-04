@@ -1,38 +1,19 @@
 Ext.define('SensorDevice.view.GalleryDemo', {
-    extend: 'Ext.Panel',
+    extend: 'Ext.dataview.DataView',
     requires: [
-        'Ext.TitleBar',
-        'Ext.Img',
-        //'SensorDevice.view.PictureList'
+        'Ext.TitleBar'
     ],
     alias: 'widget.gallerydemo',
     
     config: {
-        
-        styleHtmlContent: true,
         height: '100%',
-        layout: {
-            type: 'fit'
-        },
-        
+        store: 'Pictures',
+        itemTpl: '<div><img src="{uri}"/>{timestamp}</div>',
         items: [
             {
                 xtype: 'titlebar',
                 docked: 'top',
                 title: 'Gallery'
-            },
-            {
-                //xtype: 'picturelist',
-                
-                xtype: 'img',
-                itemId: 'galleryImg',
-                mode: 'image',
-                //store: 'Pictures',
-                src: 'http://upload.wikimedia.org/wikipedia/it/b/bd/TulipanoJPEG100.jpg',
-                margin: '10',
-                height: 288,
-                width: 288
-                
             }
         ]
     }

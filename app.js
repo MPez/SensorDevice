@@ -48,11 +48,8 @@ Ext.application({
 
     views: [
         'Main',
-        'SensorList',
         'MyNotes',
         'GalleryDemo',
-        'PictureList',
-        'PictureItem'
         //'NotesListSync',
         //'NoteEditorSync',
         ///'AuthorsListSync',
@@ -82,6 +79,22 @@ Ext.application({
     launch: function() {
         // Destroy the #appLoadingIndicator element
         Ext.fly('appLoadingIndicator').destroy();
+        
+        this.launched = true;
+        this.mainLaunch();
+        
+    },
+    
+    mainLaunch: function() {
+        /*
+         * necessario per controllare l'evento deviceready al caricamento di cordova
+         *
+        if (!device || !this.launched) {
+            return;
+        }
+        */
+        console.log('mainLaunch');
+        
         
         /*
         var notesListSync = {

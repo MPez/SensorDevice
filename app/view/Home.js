@@ -1,7 +1,6 @@
 Ext.define('SensorDevice.view.Home', {
     extend: 'Ext.Panel',
     requires: [
-        'SensorDevice.view.SensorList',
         'SensorDevice.view.BackButton',
         'SensorDevice.view.CameraDemo',
         'SensorDevice.view.FileDemo',
@@ -13,7 +12,7 @@ Ext.define('SensorDevice.view.Home', {
     alias: 'widget.home',
     
     config: {
-        styleHtmlContent: true,
+        //styleHtmlContent: true,
         height: '100%',
         layout: {
             type: 'card',

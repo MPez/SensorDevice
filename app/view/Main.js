@@ -17,18 +17,18 @@ Ext.define('SensorDevice.view.Main', {
                 { xtype: 'home' }
             },
             {
-                title: 'MyNotes',
-                iconCls: 'star',
-                
-                items:
-                { xtype: 'mynotes' }
-            },
-            {
                 title: 'Gallery',
                 iconCls: 'star',
                 
                 items:
                 { xtype: 'gallerydemo' }
+            },
+            {
+                title: 'MyNotes',
+                iconCls: 'star',
+                
+                items:
+                { xtype: 'mynotes' }
             }
         ]
     }
