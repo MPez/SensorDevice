@@ -29,12 +29,14 @@ Ext.application({
     
     models: [
         'Sensor',
-        'Picture'
+        'Picture',
+        'Contact'
     ],
     
     stores: [
         'Sensors',
-        'Pictures'
+        'Pictures',
+        'Contacts'
     ],
     
     controllers: [

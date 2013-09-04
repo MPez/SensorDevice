@@ -1,5 +1,5 @@
 Ext.define('SensorDevice.view.Home', {
-    extend: 'Ext.Panel',
+    extend: 'Ext.Container',
     requires: [
         'SensorDevice.view.BackButton',
         'SensorDevice.view.CameraDemo',
@@ -47,8 +47,39 @@ Ext.define('SensorDevice.view.Home', {
                 { xtype: 'camerademo' }
             },
             {
-                items:
-                { xtype: 'contactsdemo' }
+                items: [
+                    {
+                        xtype: 'titlebar',
+                        docked: 'top',
+                        title: 'Contacts Demo',
+                        items: [
+                            {
+                                xtype: 'backbutton'
+                            },
+                            {
+                                xtype: 'button',
+                                text: 'Load contacts',
+                                itemId: 'loadContactsButton',
+                                align: 'right'
+                            },
+                            {
+                                xtype: 'button',
+                                text: 'Delete all contacts',
+                                itemId: 'deleteContactsButton',
+                                align: 'right'
+                            }
+                        ]
+                    },
+                    {
+                        xtype: 'list',
+                        itemTpl: '{First} {Last}',
+                        itemId: 'contactsList',
+                        height: '100%',
+                        store: 'Contacts',
+                        grouped: true,
+                        indexBar: true
+                    }
+                ]
             },
             {
                 items:
@@ -66,6 +97,16 @@ Ext.define('SensorDevice.view.Home', {
                 delegate: '#backButton',
                 event: 'tap',
                 fn: 'onBackButtonTap'
+            },
+            {
+                delegate: '#loadContactsButton',
+                event: 'tap',
+                fn: 'onLoadContactsButton'
+            },
+            {
+                delegate: '#deleteContactsButton',
+                event: 'tap',
+                fn: 'onDeleteContactsButton'
             }
         ]
     },
@@ -80,5 +121,17 @@ Ext.define('SensorDevice.view.Home', {
         console.log('onBackButtonTap');
         
         this.fireEvent('backButtonCommand', this);
+    },
+    
+    onLoadContactsButton: function(scope, e, eOpts) {
+        console.log('onLoadContactsButton');
+        
+        this.fireEvent('loadContactsCommand', this);
+    },
+    
+    onDeleteContactsButton: function() {
+        console.log('onDeleteContactsButton');
+        
+        this.fireEvent('deleteContactsCommand', this);        
     }
 });

@@ -15,11 +15,13 @@ Ext.define('SensorDevice.controller.SensorDevices', {
         control: {
             homeView: {
                 itemDiscloseCommand: 'onItemDiscloseCommand',
-                backButtonCommand: 'onBackButtonCommand'
+                backButtonCommand: 'onBackButtonCommand',
+                loadContactsCommand: 'onLoadContactsCommand',
+                deleteContactsCommand: 'onDeleteContactsCommand',
             },
             cameraDemoView: {
                 cameraButtonCommand: 'onCameraButtonCommand',
-                galleryButtonCommand: 'onGalleryButtonCommand'
+                galleryButtonCommand: 'onGalleryButtonCommand',
             }
         }
     },
@@ -37,7 +39,7 @@ Ext.define('SensorDevice.controller.SensorDevices', {
     },
     
     /*
-     * Sencha Touch
+     * Sencha Touch camera capture
      */ 
     onCameraButtonCommand: function() {
         console.log('onCameraButtonCommand');
@@ -93,6 +95,30 @@ Ext.define('SensorDevice.controller.SensorDevices', {
         console.log('onCaptureFailure');
         
         Ext.Msg.alert('Error', 'There was an error when acquiring the picture.');
+    },
+    
+    /*
+     * Sencha Touch contacts
+     */
+    onLoadContactsCommand: function() {
+        console.log('onLoadContactsCommand');
+        
+        var data = [
+            { First: 'toni', Last: 'ciccione'},
+            { First: 'paolino', Last: 'paperino'},
+            { First: 'lupo', Last: 'arturo'}
+        ];
+        
+        var contactsStore = Ext.getStore('Contacts');
+        contacsStore.setData(Ext.device.Contacts.getContacts());
+        //contactsStore.setData(data);
+    },
+    
+    onDeleteContactsCommand: function() {
+        console.log('onDeleteContactsCommand');
+        
+        var contactsStore = Ext.getStore('Contacts');
+        contactsStore.removeAll();
     },
     
     init: function() {

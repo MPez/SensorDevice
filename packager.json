@@ -157,7 +157,9 @@
             "VIBRATE",
             "ACCESS_FINE_LOCATION",
             "ACCESS_COARSE_LOCATION",
-            "WRITE_EXTERNAL_STORAGE"
+            "WRITE_EXTERNAL_STORAGE",
+            "READ_EXTERNAL_STORAGE",
+            "READ_CONTACTS"
         ],
 
 	/**
