@@ -51,9 +51,7 @@ Ext.application({
     views: [
         'Main',
         'MyNotes',
-        'GalleryDemo',
-        'NoteEditorSync',
-        'AuthorEditorSync',
+        'GalleryDemo'
         //'DeleteActionSheet',
         //'DeviceInfoEditor'
     ],
@@ -176,9 +174,7 @@ Ext.application({
         
         // Initialize the main view
         Ext.Viewport.add([
-            Ext.create('SensorDevice.view.Main'),
-            Ext.create('SensorDevice.view.NoteEditorSync'),
-            Ext.create('SensorDevice.view.AuthorEditorSync')
+            Ext.create('SensorDevice.view.Main')
         ]);
     },
 

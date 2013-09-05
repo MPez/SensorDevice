@@ -111,7 +111,7 @@ Ext.define('SensorDevice.controller.SensorDevices', {
         ];
         
         var contactsStore = Ext.getStore('Contacts');
-        contacsStore.setData(Ext.device.Contacts.getContacts());
+        contactsStore.setData(Ext.device.Contacts.getContacts());
         //contactsStore.setData(data);
     },
     
@@ -123,13 +123,13 @@ Ext.define('SensorDevice.controller.SensorDevices', {
     },
     
     init: function() {
-        console.log('init');
+        console.log('init SensorDevices');
 
     },
     
     //called when the Application is launched, remove if not needed
     launch: function(app) {
-        console.log('launch');
+        console.log('launch SensorDevices');
         
         Ext.getStore('Pictures').load();
     }

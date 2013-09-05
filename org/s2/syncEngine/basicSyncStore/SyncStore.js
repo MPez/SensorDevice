@@ -48,7 +48,7 @@ Ext.define('org.s2.syncEngine.basicSyncStore.SyncStore',
 			//listener che resta in ascolto di un operazione di load. Richiamato solo al termine del load dello store
 			load: function(scope, records, successful, operation, eOpts )
 			{
-				console.log("...... onLoad listener ......");
+				//console.log("...... onLoad listener ......");
 				
 				this.download();
 			},
@@ -56,7 +56,7 @@ Ext.define('org.s2.syncEngine.basicSyncStore.SyncStore',
 			//listener che resta in ascolto di un operazione di download. Richiamato solo al termine del download dei record
 			downloadComplete: function(scope, records, successful, operation, eOpts )
 			{
-				console.log("...... onDownloadComplete listener ......");
+				//console.log("...... onDownloadComplete listener ......");
 				
 				//caso base: nessun dato scaricato
 				if(Ext.getStore(this.getDownloadStore()).getCount() == 0)
@@ -76,7 +76,7 @@ Ext.define('org.s2.syncEngine.basicSyncStore.SyncStore',
 			//listener che resta in ascolto di un operazione di clear. Richiamato solo al termine dell'eliminazione dei dati presenti in SyncStore
 			clearComplete: function(scope, records, successful, operation, eOpts )
 			{
-				console.log("...... on clearComplete listener ......");
+				//console.log("...... on clearComplete listener ......");
 				
 				this.downloadTemplate();
 			},
@@ -86,7 +86,7 @@ Ext.define('org.s2.syncEngine.basicSyncStore.SyncStore',
 			 */
 			clear: function(scope, eOpts)
 			{
-				console.log("...... onClear listener ......");
+				//console.log("...... onClear listener ......");
 			}
 		}
 	},
@@ -126,7 +126,7 @@ Ext.define('org.s2.syncEngine.basicSyncStore.SyncStore',
 	//metodo usato per la creazione dello store di commit
 	initCommitStore: function()
 	{
-		console.log("------ onInitCommitStore ------");
+		//console.log("------ onInitCommitStore ------");
 		
 		//variabili utili per la memorizzazione dei nomi
 		var pathModel = this.getAppName() + '.model.' + this.getModelName();
@@ -148,7 +148,7 @@ Ext.define('org.s2.syncEngine.basicSyncStore.SyncStore',
 	
 	initDownloadStore: function()
 	{
-		console.log("------ onInitDownloadStore ------");
+		//console.log("------ onInitDownloadStore ------");
 		
 		//variabili utili per la memorizzazione dei nomi
 		var pathModel = this.getAppName() + '.model.' + this.getModelName();
@@ -172,7 +172,7 @@ Ext.define('org.s2.syncEngine.basicSyncStore.SyncStore',
 	//metodo usato per rimuovere ogni elemento dal SyncStore (inteso come store locale)
 	clearTable: function()
 	{
-		console.log("------ onClearTable ------");
+		//console.log("------ onClearTable ------");
 		
 		this.getProxy().dropTable();
 
@@ -184,7 +184,7 @@ Ext.define('org.s2.syncEngine.basicSyncStore.SyncStore',
 	
 	download: function()
 	{
-		console.log("------ Download avviato ------");
+		//console.log("------ Download avviato ------");
 		
 		//il download è abilitato? c'è connettività?
 		if(this.getDisableDownload() || !Ext.device.Connection.isOnline())
@@ -199,7 +199,7 @@ Ext.define('org.s2.syncEngine.basicSyncStore.SyncStore',
 	
 	downloadTemplate: function()
 	{
-		console.log("------ onDownloadTemplate ------");
+		//console.log("------ onDownloadTemplate ------");
 		
 		//avverto che i dati che sto per inserire nello store non sono nuovi, ma sono quelli scaricati dal db
 		var myName = this.getStoreId();
@@ -222,7 +222,7 @@ Ext.define('org.s2.syncEngine.basicSyncStore.SyncStore',
 	//metodo usato per applicare le modifiche avvenute localmente, ai dati scaricaricati in seguito all'esecuzione di this.download()
 	applyLocalChange: function(storeName, idName, commitName)
 	{
-		console.log("------ onApplyLocalChange ------");
+		//console.log("------ onApplyLocalChange ------");
 		
 		Ext.getStore(commitName).each(function(record) 
 		{
@@ -245,7 +245,7 @@ Ext.define('org.s2.syncEngine.basicSyncStore.SyncStore',
 	//metodo usato per inviare i dati al server.
 	upload: function()
 	{
-		console.log("------ Upload avviato ------");
+		//console.log("------ Upload avviato ------");
 		
 		var commitName = this.getCommitStore();
 		var toCommit = '[';
