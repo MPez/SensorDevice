@@ -7,6 +7,8 @@ Ext.define('org.s2.syncEngine.SyncManager',
 		'org.s2.syncEngine.MyDeviceInfo',
 		'org.s2.syncEngine.idHandler.IndexIDStore',
 		'org.s2.syncEngine.idHandler.IndexIDStoreFactory',
+		'org.s2.syncEngine.basicSyncStore.SyncStore',
+		
 		'Ext.data.proxy.JsonP'
 	],
 	
@@ -16,7 +18,7 @@ Ext.define('org.s2.syncEngine.SyncManager',
 		appName: 'null',
 		registry: 'null',
 		deviceInfo: 'null',
-		indexStore: 'null',
+		indexStore: 'null'
 	},
 	
 	constructor: function(conf) 

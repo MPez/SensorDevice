@@ -15,7 +15,8 @@
 
 //<debug>
 Ext.Loader.setPath({
-    'Ext': 'touch/src'
+    'Ext': 'touch/src',
+    'org.s2': 's2'
 });
 //</debug>
 
@@ -23,8 +24,8 @@ Ext.application({
     name: 'SensorDevice',
     requires: [
         'Ext.MessageBox',
-        'org.s2.syncEngine.SyncManager',
-        'org.s2.syncEngine.basicSyncStore.SyncStore'
+        
+        'org.s2.syncEngine.SyncManager'
     ],
     
     models: [
@@ -52,8 +53,6 @@ Ext.application({
         'Main',
         'MyNotes',
         'GalleryDemo'
-        //'DeleteActionSheet',
-        //'DeviceInfoEditor'
     ],
 
     icon: {
@@ -163,7 +162,6 @@ Ext.application({
                 }
             }
         });
-        
         
         /*
          * impostazione dello storeManager come proprietà del controller

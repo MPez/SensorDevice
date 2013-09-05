@@ -59,7 +59,7 @@ Ext.define('SensorDevice.view.MyNotes', {
                                 //text: 'New Author',
                                 itemId: 'newAuthorButton',
                                 iconCls: 'user',
-                                align: 'right',
+                                align: 'right'
                             },
                             {
                                 //text: 'Edit Author',
@@ -72,7 +72,7 @@ Ext.define('SensorDevice.view.MyNotes', {
                                 //text: 'Device Info',
                                 itemId: 'deviceInfoButton',
                                 iconCls: 'info',
-                                align: 'right',
+                                align: 'right'
                             }
                         ]
                     },
@@ -85,7 +85,7 @@ Ext.define('SensorDevice.view.MyNotes', {
                         emptyText: '<div class="notes-list-empty-text">No notes found</div>',
                         onItemDisclosure: true,
                         grouped: true,
-                        itemTpl: '<pre><div class="list-item-title">{title} by {author}</div><div class="list-item-narrative">{narrative}</div></pre>',
+                        itemTpl: '<pre><div class="list-item-title">{title} by {author}</div><div class="list-item-narrative">{narrative}</div></pre>'
                     }
                 ]
             },
@@ -261,5 +261,5 @@ Ext.define('SensorDevice.view.MyNotes', {
     onSaveDeviceButtonTap: function() {
         console.log('saveDeviceButtonTap');
         this.fireEvent('saveDeviceInfoCommand', this);
-    },
+    }
 });

@@ -122,6 +122,7 @@
      * List of package names to require for the cmd build process
      */
     "requires": [
+	"org"
     ],
 
     /**
