@@ -3,7 +3,8 @@ Ext.define('SensorDevice.controller.SensorDevices', {
     requires: [
         'Ext.device.Camera',
         'Ext.device.Orientation',
-        'Ext.device.Connection'
+        'Ext.device.Connection',
+        'Ext.device.Contacts'
     ],
     
     config: {
@@ -17,11 +18,11 @@ Ext.define('SensorDevice.controller.SensorDevices', {
                 itemDiscloseCommand: 'onItemDiscloseCommand',
                 backButtonCommand: 'onBackButtonCommand',
                 loadContactsCommand: 'onLoadContactsCommand',
-                deleteContactsCommand: 'onDeleteContactsCommand',
+                deleteContactsCommand: 'onDeleteContactsCommand'
             },
             cameraDemoView: {
                 cameraButtonCommand: 'onCameraButtonCommand',
-                galleryButtonCommand: 'onGalleryButtonCommand',
+                galleryButtonCommand: 'onGalleryButtonCommand'
             }
         }
     },

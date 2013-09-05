@@ -22,35 +22,38 @@ Ext.Loader.setPath({
 Ext.application({
     name: 'SensorDevice',
     requires: [
-        'Ext.MessageBox'
-        //'org.s2.syncEngine.SyncManager',
-        //'org.s2.syncEngine.basicSyncStore.SyncStore'
+        'Ext.MessageBox',
+        'org.s2.syncEngine.SyncManager',
+        'org.s2.syncEngine.basicSyncStore.SyncStore'
     ],
     
     models: [
         'Sensor',
         'Picture',
-        'Contact'
+        'Contact',
+        'NoteSync',
+        'AuthorSync',
+        'Device'
     ],
     
     stores: [
         'Sensors',
         'Pictures',
-        'Contacts'
+        'Contacts',
+        'DevicesSync'
     ],
     
     controllers: [
-        'SensorDevices'
+        'SensorDevices',
+        'NotesSync'
     ],
 
     views: [
         'Main',
         'MyNotes',
-        'GalleryDemo'
-        //'NotesListSync',
-        //'NoteEditorSync',
-        ///'AuthorsListSync',
-        //'AuthorEditorSync',
+        'GalleryDemo',
+        'NoteEditorSync',
+        'AuthorEditorSync',
         //'DeleteActionSheet',
         //'DeviceInfoEditor'
     ],
@@ -92,17 +95,97 @@ Ext.application({
         */
         console.log('mainLaunch');
         
+        /*
+         * creazione dello storeManager da utilizzarsi per la gestione degli store
+         */
+        var storeManager = Ext.create('SyncManager', {
+            dbName: 'SensorDeviceDb',
+            appName: this.getName(),
+            deviceID: 'Marco'
+        });
+        
+        /*
+         * creazione dello store relativo agli autori
+         */
+        storeManager.createSyncStore({
+            model: 'SensorDevice.model.AuthorSync',
+            tableID: 'authorID',
+            remoteURL: 'http://srv1.soluzioni-sw.it/NotesWeb/Author.aspx',
+            storeId: 'Authors'
+        });
+        
+        /*
+         * impostazione dei sorter e grouper degli autori
+         */
+        var authorsStore = Ext.getStore('Authors');
+        authorsStore.setSorters({
+            property: 'surname',
+            direction: 'ASC'
+        });
+        authorsStore.setGrouper({
+            sortProperty: 'surname',
+            direction: 'ASC',
+            groupFn: function(record) {
+                if (record && record.data.surname) {
+                    return record.data.surname.substr(0,1).toUpperCase();
+                } else {
+                    return '';
+                }
+            }
+        });
+        
+        /*
+         * creazione dello store relativo alle note
+         */
+        storeManager.createSyncStore({
+            model: 'SensorDevice.model.NoteSync',
+            tableID: 'noteID',
+            remoteURL: 'http://srv1.soluzioni-sw.it/NotesWeb/Note.aspx',
+            storeId: 'Notes'
+        });
+        
+        /*
+         * impostazione dei sorter e grouper delle note
+         */
+        var notesStore = Ext.getStore('Notes');
+        notesStore.setSorters({
+            property: 'dateCreated',
+            direction: 'DESC'
+        });
+        notesStore.setGrouper({
+            sortProperty: 'dateCreated',
+            direction: 'DESC',
+            groupFn: function(record) {
+                if (record && record.data.dateCreated) {
+                    var dataString = record.data.dateCreated;
+                    var data = new Date(dataString);
+                    return data.toDateString();
+                } else {
+                    return '';
+                }
+            }
+        });
+        
+        
+        /*
+         * impostazione dello storeManager come proprietà del controller
+         */
+        var controller = this.getController('NotesSync');
+        controller.setManager(storeManager);
+        
         
         // Initialize the main view
         Ext.Viewport.add([
-            Ext.create('SensorDevice.view.Main') 
+            Ext.create('SensorDevice.view.Main'),
+            Ext.create('SensorDevice.view.NoteEditorSync'),
+            Ext.create('SensorDevice.view.AuthorEditorSync')
         ]);
     },
 
     onUpdated: function() {
         Ext.Msg.confirm(
-            "Application Update",
-            "This application has just successfully been updated to the latest version. Reload now?",
+            'Application Update',
+            'This application has just successfully been updated to the latest version. Reload now?',
             function(buttonId) {
                 if (buttonId === 'yes') {
                     window.location.reload();

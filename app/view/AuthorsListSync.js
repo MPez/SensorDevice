@@ -18,7 +18,7 @@ Ext.define("SensorDevice.view.AuthorsListSync", {
             itemId: "authorsList",
             loadingText: "Loading authors...",
             emptyText: '<div class="author-list-empty-text">No authors found</div>',
-            //grouped: true,
+            grouped: true,
             itemTpl: '{name} {surname}'
         }],
         

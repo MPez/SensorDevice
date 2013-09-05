@@ -1,95 +1,100 @@
-Ext.define("SensorDevice.controller.NotesSync", {
-    extend: "Ext.app.Controller",
+Ext.define('SensorDevice.controller.NotesSync', {
+    extend: 'Ext.app.Controller',
     requires: [
-        "Ext.MessageBox"
+        'Ext.MessageBox',
+        
+        'SensorDevice.view.NoteEditorSync',
+        'SensorDevice.view.AuthorEditorSync',
+        'SensorDevice.view.DeviceInfoEditor',
+        'SensorDevice.view.DeleteActionSheet'
     ],
     
     config: {
         manager: undefined,
         refs: {
-            notesListView: "noteslistsync",
-            noteEditorView: "noteeditorsync",
-            deleteActionSheet: "deleteactionsheet",
-            authorEditorView: "authoreditorsync",
-            authorsListView: "authorslistsync",
-            deviceInfoEditor: "deviceinfoeditor"
+            notesListView: 'mynotes',
+            noteEditorView: 'noteeditorsync',
+            deleteActionSheet: 'deleteactionsheet',
+            authorEditorView: 'authoreditorsync',
+            authorsListView: 'authorslistsync',
+            deviceInfoEditor: 'deviceinfoeditor'
         },
         control: {
             notesListView: {
-                newNoteCommand: "onNewNoteCommand",
-                editNoteCommand: "onEditNoteCommand",
-                newAuthorCommand: "onNewAuthorCommand",
-                downloadDbCommand: "onDownloadDbCommand",
-                uploadDbCommand: "onUploadDbCommand",
-                deviceInfoCommand: "onDeviceInfoCommand"
+                newNoteCommand: 'onNewNoteCommand',
+                editNoteCommand: 'onEditNoteCommand',
+                newAuthorCommand: 'onNewAuthorCommand',
+                downloadDbCommand: 'onDownloadDbCommand',
+                uploadDbCommand: 'onUploadDbCommand',
+                deviceInfoCommand: 'onDeviceInfoCommand'
             },
             
             noteEditorView: {
-                saveNoteCommand: "onSaveNoteCommand",
-                backHomeCommand: "onBackHomeCommand"
+                saveNoteCommand: 'onSaveNoteCommand',
+                backHomeCommand: 'onBackHomeCommand'
             },
             
             deleteActionSheet: {
-                deleteSheetNoteCommand: "onDeleteNoteCommand",
-                deleteSheetAuthorCommand: "onDeleteAuthorCommand"
+                deleteSheetNoteCommand: 'onDeleteNoteCommand',
+                deleteSheetAuthorCommand: 'onDeleteAuthorCommand'
             },
             
             authorEditorView: {
-                saveAuthorCommand: "onSaveAuthorCommand",
-                backHomeCommand: "onBackHomeCommand"
+                saveAuthorCommand: 'onSaveAuthorCommand',
+                backHomeCommand: 'onBackHomeCommand'
             },
             
             authorsListView: {
-                editAuthorCommand: "onEditAuthorCommand"
+                editAuthorCommand: 'onEditAuthorCommand'
             },
             
             deviceInfoEditor: {
-                saveDeviceInfoCommand: "onSaveDeviceInfoCommand",
-                backHomeCommand: "onBackHomeCommand"
+                saveDeviceInfoCommand: 'onSaveDeviceInfoCommand',
+                backHomeCommand: 'onBackHomeCommand'
             }
         }
     },
     
     onNewNoteCommand: function() {
-        console.log("onNewNoteCommand")
+        console.log('onNewNoteCommand');
         
         var now = new Date();
         
-        var newNote = Ext.create("MyNotes.model.NoteSync", {
-            author: "",
+        var newNote = Ext.create('SensorDevice.model.NoteSync', {
+            author: '',
             dateCreated: now,
-            title: "",
-            narrative: ""
+            title: '',
+            narrative: ''
         });
         
         this.activateNoteEditor(newNote);
     },
     
     onEditNoteCommand: function(list, record) {
-        console.log("onEditNoteCommand");
+        console.log('onEditNoteCommand');
         
         this.activateNoteEditor(record);
     },
     
     onNewAuthorCommand: function() {
-        console.log("onNewAuthorCommand");
+        console.log('onNewAuthorCommand');
 
-        var newAuthor = Ext.create("MyNotes.model.AuthorSync", {
-            name: "",
-            surname: ""
+        var newAuthor = Ext.create('SensorDevice.model.AuthorSync', {
+            name: '',
+            surname: ''
         });
         
         this.activateAuthorEditor(newAuthor);
     },
     
     onEditAuthorCommand: function(list, record) {
-        console.log("onEditAuthorCommand");
+        console.log('onEditAuthorCommand');
         
         this.activateAuthorEditor(record);
     },
     
     onDownloadDbCommand: function() {
-        console.log("onDownloadDbCommand");
+        console.log('onDownloadDbCommand');
         
         /*
          * codice che usa il syncManager
@@ -99,7 +104,7 @@ Ext.define("SensorDevice.controller.NotesSync", {
     },
     
     onUploadDbCommand: function() {
-        console.log("onUploadDbCommand");
+        console.log('onUploadDbCommand');
         
         /*
          * codice che usa il syncManager
@@ -109,14 +114,14 @@ Ext.define("SensorDevice.controller.NotesSync", {
     },
     
     onDeviceInfoCommand: function() {
-        console.log("onDeviceInfoCommand");
+        console.log('onDeviceInfoCommand');
         
-        var deviceStore = Ext.getStore("DevicesSync");
+        var deviceStore = Ext.getStore('DevicesSync');
         if (deviceStore.getCount() == 0) {
-            var newDevice = Ext.create("MyNotes.model.Device", {
+            var newDevice = Ext.create('SensorDevice.model.Device', {
                 deviceId: 1,
-                name: "",
-                description: ""
+                name: '',
+                description: ''
             });
         }
         else {
@@ -127,21 +132,21 @@ Ext.define("SensorDevice.controller.NotesSync", {
     },
     
     onSaveNoteCommand: function() {
-        console.log("onSaveNoteCommand");
+        console.log('onSaveNoteCommand');
         
         var noteEditor = this.getNoteEditorView();
         var currentNote = noteEditor.getRecord();
         var newValues = noteEditor.getValues();
         
-        currentNote.set("title", newValues.title);
-        currentNote.set("narrative", newValues.narrative);
-        currentNote.set("author", newValues.author);
+        currentNote.set('title', newValues.title);
+        currentNote.set('narrative', newValues.narrative);
+        currentNote.set('author', newValues.author);
         
         var errors = currentNote.validate();
         
         if (!errors.isValid()) {
             errors.each(function(error) {
-                Ext.Msg.alert("Wait!", error.getMessage(), Ext.emptyFn);
+                Ext.Msg.alert('Wait!', error.getMessage(), Ext.emptyFn);
             });
             currentNote.reject();
             return;
@@ -151,26 +156,26 @@ Ext.define("SensorDevice.controller.NotesSync", {
          * codice che usa il SyncManager
          */
         var manager = this.getManager();
-        manager.addToStore("Notes", currentNote);
+        manager.addToStore('Notes', currentNote);
 
         this.activateNotesList();
     },
     
     onSaveAuthorCommand: function() {
-        console.log("onSaveAuthorCommand");
+        console.log('onSaveAuthorCommand');
         
         var authorEditor = this.getAuthorEditorView();
         var currentAuthor = authorEditor.getRecord();
         var newValues = authorEditor.getValues();
         
-        currentAuthor.set("name", newValues.name);
-        currentAuthor.set("surname", newValues.surname);
+        currentAuthor.set('name', newValues.name);
+        currentAuthor.set('surname', newValues.surname);
         
         var errors = currentAuthor.validate();
         
         if (!errors.isValid()) {
             errors.each(function(error) {
-                Ext.Msg.alert("Wait!", error.getMessage(), Ext.emptyFn);    
+                Ext.Msg.alert('Wait!', error.getMessage(), Ext.emptyFn);    
             });
             currentAuthor.reject();
             return;
@@ -180,33 +185,33 @@ Ext.define("SensorDevice.controller.NotesSync", {
          * codice che usa il SyncManager
          */
         var manager = this.getManager();
-        manager.addToStore("Authors", currentAuthor);
+        manager.addToStore('Authors', currentAuthor);
 
         this.activateNotesList();
     },
     
     onSaveDeviceInfoCommand: function() {
-        console.log("onSaveDeviceInfoCommand");
+        console.log('onSaveDeviceInfoCommand');
         
         var deviceInfoEditor = this.getDeviceInfoEditor();
         var currentDevice = deviceInfoEditor.getRecord();
         var newValues = deviceInfoEditor.getValues();
         
-        currentDevice.set("name", newValues.name);
-        currentDevice.set("description", newValues.description);
+        currentDevice.set('name', newValues.name);
+        currentDevice.set('description', newValues.description);
         
         var errors = currentDevice.validate();
         
         if (!errors.isValid()) {
-            Ext.Msg.alert("Wait!", errors.getByField("name")[0].getMessage(), Ext.emptyFn);
+            Ext.Msg.alert('Wait!', errors.getByField('name')[0].getMessage(), Ext.emptyFn);
             currentDevice.reject();
             return;
         }
         
-        var deviceStore = Ext.getStore("DevicesSync");
+        var deviceStore = Ext.getStore('DevicesSync');
         
-        if (null == deviceStore.findRecord("deviceId", currentDevice.data.deviceId)) {
-            console.log("New device added to the store");
+        if (null == deviceStore.findRecord('deviceId', currentDevice.data.deviceId)) {
+            console.log('New device added to the store');
             console.log(currentDevice.getData());
             
             deviceStore.add(currentDevice);
@@ -218,13 +223,13 @@ Ext.define("SensorDevice.controller.NotesSync", {
     },
     
     onBackHomeCommand: function() {
-        console.log("onBackHomeCommand");
+        console.log('onBackHomeCommand');
         
         this.activateNotesList();
     },
     
     onDeleteNoteCommand: function() {
-        console.log("onDeleteNoteCommand");
+        console.log('onDeleteNoteCommand');
         
         var noteEditor = this.getNoteEditorView();
         var currentNote = noteEditor.getRecord();
@@ -233,13 +238,13 @@ Ext.define("SensorDevice.controller.NotesSync", {
          * codice che usa il SyncManager
          */
         var manager = this.getManager();
-        manager.deleteFromStore("Notes", currentNote);
+        manager.deleteFromStore('Notes', currentNote);
         
         this.activateNotesList();
     },
     
     onDeleteAuthorCommand: function() {
-        console.log("onDeleteAuthorCommand");
+        console.log('onDeleteAuthorCommand');
         
         var authorEditor = this.getAuthorEditorView();
         var currentAuthor = authorEditor.getRecord();
@@ -248,7 +253,7 @@ Ext.define("SensorDevice.controller.NotesSync", {
          * codice che usa il SyncManager
          */
         var manager = this.getManager();
-        manager.deleteFromStore("Author", currentAuthor);
+        manager.deleteFromStore('Author', currentAuthor);
         
         this.activateNotesList();
     },
@@ -275,21 +280,21 @@ Ext.define("SensorDevice.controller.NotesSync", {
         Ext.Viewport.animateActiveItem(deviceInfoEditor, this.slideLeftTransition);
     },
     
-    slideLeftTransition: {type: "slide", direction: "left"},
+    slideLeftTransition: {type: 'slide', direction: 'left'},
     
     activateNotesList: function() {
         Ext.Viewport.animateActiveItem(this.getNotesListView(), this.slideRightTransition);
     },
     
-    slideRightTransition: {type: "slide", direction: "right"},
+    slideRightTransition: {type: 'slide', direction: 'right'},
     
     launch: function() {
         this.callParent();
         
-        Ext.getStore("DevicesSync").load(function(records, operation, success) {
-            if(Ext.getStore("DevicesSync").getCount() == 0) {
-                Ext.Msg.alert("Id device mancante",
-                              "Si prega di inserire il nome del device e salvarlo per poter utilizzare l'applicazione",
+        Ext.getStore('DevicesSync').load(function(records, operation, success) {
+            if(Ext.getStore('DevicesSync').getCount() == 0) {
+                Ext.Msg.alert('Id device mancante',
+                              'Si prega di inserire il nome del device e salvarlo per poter utilizzare l\'applicazione',
                               this.onDeviceInfoCommand());
             }
         }, this);
@@ -300,12 +305,12 @@ Ext.define("SensorDevice.controller.NotesSync", {
         var manager = this.getManager();
         manager.loadDatabase();
 
-        console.log("launch");
+        console.log('launch');
     },
     
     init: function() {
         this.callParent();
         
-        console.log("init");
+        console.log('init');
     }
 });

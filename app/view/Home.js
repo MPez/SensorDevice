@@ -6,6 +6,7 @@ Ext.define('SensorDevice.view.Home', {
         'SensorDevice.view.FileDemo',
         'SensorDevice.view.ContactsDemo',
         'SensorDevice.view.MediaDemo',
+        
         'Ext.dataview.List',
         'Ext.TitleBar'
     ],
@@ -76,6 +77,7 @@ Ext.define('SensorDevice.view.Home', {
                         itemId: 'contactsList',
                         height: '100%',
                         store: 'Contacts',
+                        empyText: '<div>No contacts found.</div>',
                         grouped: true,
                         indexBar: true
                     }
