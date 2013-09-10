@@ -22,7 +22,8 @@ Ext.define('SensorDevice.view.Main', {
                 
                 items:
                 { xtype: 'gallerydemo' }
-            },
+            }
+            /*
             {
                 title: 'MyNotes',
                 iconCls: 'star',
@@ -30,6 +31,7 @@ Ext.define('SensorDevice.view.Main', {
                 items:
                 { xtype: 'mynotes' }
             }
+            */
         ]
     }
 });

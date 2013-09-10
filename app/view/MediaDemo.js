@@ -13,7 +13,11 @@ Ext.define('SensorDevice.view.MediaDemo', {
                 title: 'Media Demo',
                 items: [
                     {
-                        xtype: 'backbutton'
+                        xtype: 'button',
+                        itemId: 'backButton',
+                        ui: 'back',
+                        iconCls: 'arrow_left',
+                        iconMask: true
                     }
                 ]
             }

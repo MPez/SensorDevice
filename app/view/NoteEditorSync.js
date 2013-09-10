@@ -5,9 +5,7 @@ Ext.define('SensorDevice.view.NoteEditorSync', {
         'Ext.field.Text',
         'Ext.field.TextArea',
         'Ext.field.Select',
-        'Ext.TitleBar',
-        
-        'SensorDevice.view.BackButton'
+        'Ext.TitleBar'
     ],
     alias: 'widget.noteeditorsync',
     
@@ -20,7 +18,11 @@ Ext.define('SensorDevice.view.NoteEditorSync', {
                 title: 'Edit note',
                 items: [
                     {
-                        xtype: 'backbutton',
+                        xtype: 'button',
+                        itemId: 'backButton',
+                        ui: 'back',
+                        iconCls: 'arrow_left',
+                        iconMask: true,
                         align: 'left'
                     },
                     {

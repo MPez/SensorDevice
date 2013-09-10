@@ -8,6 +8,8 @@ Ext.define('SensorDevice.view.GalleryDemo', {
     config: {
         height: '100%',
         store: 'Pictures',
+        loadingText: 'Loading images...',
+        emptyText: 'No images found.',
         itemTpl: '<div><img src="{uri}"/>{timestamp}</div>',
         items: [
             {

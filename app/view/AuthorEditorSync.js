@@ -4,9 +4,7 @@ Ext.define('SensorDevice.view.AuthorEditorSync', {
         'Ext.form.FieldSet',
         'Ext.field.Text',
         'Ext.field.TextArea',
-        'Ext.TitleBar',
-        
-        'SensorDevice.view.BackButton'
+        'Ext.TitleBar'
     ],
     alias: 'widget.authoreditorsync',
 
@@ -19,7 +17,11 @@ Ext.define('SensorDevice.view.AuthorEditorSync', {
                 title: 'Edit author',
                 items: [
                     {
-                        xtype: 'backbutton',
+                        xtype: 'button',
+                        itemId: 'backButton',
+                        ui: 'back',
+                        iconCls: 'arrow_left',
+                        iconMask: true,
                         align: 'left'
                     },
                     {

@@ -15,7 +15,11 @@ Ext.define('SensorDevice.view.CameraDemo', {
                 title: 'Camera Demo',
                 items: [
                     {
-                        xtype: 'backbutton'
+                        xtype: 'button',
+                        itemId: 'backButton',
+                        ui: 'back',
+                        iconCls: 'arrow_left',
+                        iconMask: true
                     }
                 ]
             },
