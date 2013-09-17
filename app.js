@@ -23,7 +23,7 @@ Ext.Loader.setPath({
 Ext.application({
     name: 'SensorDevice',
     requires: [
-        'Ext.MessageBox'
+        'Ext.MessageBox',
         
         //'org.s2.syncEngine.SyncManager'
     ],
@@ -32,29 +32,29 @@ Ext.application({
         'Sensor',
         'Picture',
         'Contact',
-        'PersonalInfo'
-        //'NoteSync',
-        //'AuthorSync',
-        //'Device'
+        'PersonalInfo',
+        'NoteSync',
+        'AuthorSync',
+        'Device'
     ],
     
     stores: [
         'Sensors',
         'Pictures',
         'Contacts',
-        'PersonalInfos'
-        //'DevicesSync'
+        'PersonalInfos',
+        'DevicesSync'
     ],
     
     controllers: [
-        'SensorDevices'
-        //'NotesSync'
+        'SensorDevices',
+        'NotesSync'
     ],
 
     views: [
         'Main',
-        'GalleryDemo'
-        //'MyNotes',
+        'GalleryDemo',
+        'MyNotes',
     ],
 
     icon: {
@@ -96,7 +96,7 @@ Ext.application({
         
         /*
          * creazione dello storeManager da utilizzarsi per la gestione degli store
-         *
+         */
         var storeManager = Ext.create('SyncManager', {
             dbName: 'SensorDeviceDb',
             appName: this.getName(),
@@ -105,7 +105,7 @@ Ext.application({
         
         /*
          * creazione dello store relativo agli autori
-         *
+         */
         storeManager.createSyncStore({
             model: 'SensorDevice.model.AuthorSync',
             tableID: 'authorID',
@@ -115,7 +115,7 @@ Ext.application({
         
         /*
          * impostazione dei sorter e grouper degli autori
-         *
+         */
         var authorsStore = Ext.getStore('Authors');
         authorsStore.setSorters({
             property: 'surname',
@@ -135,7 +135,7 @@ Ext.application({
         
         /*
          * creazione dello store relativo alle note
-         *
+         */
         storeManager.createSyncStore({
             model: 'SensorDevice.model.NoteSync',
             tableID: 'noteID',
@@ -145,7 +145,7 @@ Ext.application({
         
         /*
          * impostazione dei sorter e grouper delle note
-         *
+         */
         var notesStore = Ext.getStore('Notes');
         notesStore.setSorters({
             property: 'dateCreated',
@@ -167,10 +167,10 @@ Ext.application({
         
         /*
          * impostazione dello storeManager come proprietà del controller
-         *
+         */
         var controller = this.getController('NotesSync');
         controller.setManager(storeManager);
-        */
+        
         
         // Initialize the main view
         Ext.Viewport.add([
