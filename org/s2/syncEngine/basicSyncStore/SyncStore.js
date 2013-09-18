@@ -1,3 +1,7 @@
+/**
+ * SyncStore rappresenta una tabella del database dell'applicazione.
+ * È la classe base utilizzata per la creazione di tutti gli store dinamici richiesti.
+ */
 Ext.define('org.s2.syncEngine.basicSyncStore.SyncStore',
 {
 	extend: 'Ext.data.Store',
@@ -15,19 +19,52 @@ Ext.define('org.s2.syncEngine.basicSyncStore.SyncStore',
 	
 	config:
 	{
-		//ATTENZIONE: i seguenti dati vanno inseriti dall'utente con la logica qui specificata:
-		//Si osservi anche il costruttore nel ramo conf.costructorRid
-		model: 'null', //model di riferimento
-		modelName: 'null', //inserire il nome del model
-		tableID : 'null', //id della tabella rappresentata dal model. usato per le PK
-		remoteURL: 'null', //URL per la connessione remota al database
-		storeId: 'null', //ID dello store, idealmente uguale al nome dato alla classe
-		deviceId: 'null', //identificativo del device in cui è creato lo store. Usato per la generazione delle PK
-		appName: 'null', //nome dell'applicazione
-		myDbName: 'null', //nome del database in cui viene inserito lo store
+		/**
+		 * @cfg {Ext.data.Model} (required)
+		 * Modello dei dati di riferimento.
+		 */
+		model: 'null',
+		/**
+		 * @cfg (required)
+		 * Nome del modello di riferimento.
+		 */
+		modelName: 'null',
+		/**
+		 * @cfg (required)
+		 * Nome identificativo della tabella rappresentata dallo store nel database WebSQL.
+		 */
+		tableID : 'null',
+		/**
+		 * @cfg (required)
+		 * Indirizzo per la connessione remota al server.
+		 */
+		remoteURL: 'null',
+		/**
+		 * @cfg (required)
+		 * Nome identificativo dello store, solitamente uguale al nome della classe.
+		 */
+		storeId: 'null',
+		/**
+		 * @cfg (required)
+		 * Nome identificativo del device in cui è creato lo store.
+		 */
+		deviceId: 'null',
+		/**
+		 * @cfg (required)
+		 * Nome dell'applicazione.
+		 */
+		appName: 'null',
+		/**
+		 * @cfg (required)
+		 * Nome del database di riferimento.
+		 */
+		myDbName: 'null',
 		
-		//Proxy di un generico store SyncStore: di default è uno store di tipo WebSQL... parto dal presupposto che all'avvio non ho connettività, e se ho già dei dati, essi sono salvati sul device in locale
 		/*
+		 * Proxy di un generico store SyncStore: di default è uno store di tipo WebSQL.
+		 * Parto dal presupposto che all'avvio non ho connettività; se ho già dei dati,
+		 * essi sono salvati sul device in locale
+		 *
 		proxy:
 		{
 			type: 'sql',
@@ -35,17 +72,45 @@ Ext.define('org.s2.syncEngine.basicSyncStore.SyncStore',
 		},
 		*/
 		
-		//Store di tipo WebSQL usato per salvare le ''bozze'' dei dati non ancora sincronizzati. commitStore viene svuotato dal suo contenuto al termine di ogni operazione RIUSCITA di invio dei dati. Vedere upload() per ulteriori informazioni in merito
-		commitStore: 'null', //contiene il nome dello store di commit
+		/**
+		 * @cfg (required)
+		 * Nome dello store di commit.
+		 * Store di tipo WebSQL usato per salvare le ''bozze'' dei dati non ancora sincronizzati.
+		 * CommitStore viene svuotato dal suo contenuto al termine di ogni operazione RIUSCITA di invio dei dati.
+		 * Vedere {@link upload} per ulteriori informazioni in merito.
+		 */
+		commitStore: 'null',
+		/**
+		 * @cfg {Ext.data.Model} (required)
+		 * Modello dei dati per lo store.
+		 */
 		commitModel: 'null',
-		downloadStore: 'null', //contiene il nome dello store di download
+		/**
+		 * @cfg (required)
+		 * Nome dello store di download.
+		 */
+		downloadStore: 'null',
+		/**
+		 * @cfg
+		 * Impostazione di autocaricamento dello store.
+		 */
 		autoLoad: false,
+		/**
+		 * @cfg
+		 * Impostazione usata per disabilitare il download durante una procedura di upload.
+		 */
 		disableDownload: false,
 		
-		//per via dell'assincronia presente nelle operazioni di load degli store, si usa un listeners la cui struttura rappresenta anche gli step che intercorrono durante un operazione di download.
+		/**
+		 * @cfg 
+		 * A causa dell'asincronia presente nelle operazioni di load degli store,
+		 * si usano dei listener la cui struttura rappresenta anche gli step che intercorrono durante un operazione di download.
+		 */
 		listeners:
 		{	
-			//listener che resta in ascolto di un operazione di load. Richiamato solo al termine del load dello store
+			/**
+			 * Listener che resta in ascolto di un operazione di load. Richiamato solo al termine del load dello store.
+			 */
 			load: function(scope, records, successful, operation, eOpts )
 			{
 				//console.log("...... onLoad listener ......");
@@ -53,7 +118,9 @@ Ext.define('org.s2.syncEngine.basicSyncStore.SyncStore',
 				this.download();
 			},
 			
-			//listener che resta in ascolto di un operazione di download. Richiamato solo al termine del download dei record
+			/**
+			 * Listener che resta in ascolto di un operazione di download. Richiamato solo al termine del download dei record.
+			 */
 			downloadComplete: function(scope, records, successful, operation, eOpts )
 			{
 				//console.log("...... onDownloadComplete listener ......");
@@ -73,24 +140,31 @@ Ext.define('org.s2.syncEngine.basicSyncStore.SyncStore',
 				return true;
 			},	
 
-			//listener che resta in ascolto di un operazione di clear. Richiamato solo al termine dell'eliminazione dei dati presenti in SyncStore
+			/**
+			 * Listener che resta in ascolto di un operazione di clear.
+			 * Richiamato solo al termine dell'eliminazione dei dati presenti in SyncStore.
+			 */
 			clearComplete: function(scope, records, successful, operation, eOpts )
 			{
 				//console.log("...... on clearComplete listener ......");
 				
 				this.downloadTemplate();
-			},
-			
-			/*
-			 * listner per controllare l'avvenuta cancellazione delle tabelle
-			 */
-			clear: function(scope, eOpts)
-			{
-				//console.log("...... onClear listener ......");
 			}
 		}
 	},
-	
+	/**
+	 * Costruttore ridefinito.
+	 *
+	 * @param {Object} conf Parametri di configurazione.
+	 * @param {Ext.data.Model} conf.model Modello dei dati.
+	 * @param {String} conf.modelName Nome identificativo del modello.
+	 * @param {String} conf.tableId Nome identificativo della tabella.
+	 * @param {String} conf.remoteURL Indirizzo del server.
+	 * @param {String} conf.storeId Nome identificativo dello store.
+	 * @param {String} conf.deviceId Nome identificativo del dispositivo.
+	 * @param {String} conf.appName Nome dell'applicazione.
+	 * @param {String} conf.myDbName Nome del database.
+	 */
 	constructor: function(conf)
 	{
 		if(conf.costructorRid)
@@ -117,13 +191,18 @@ Ext.define('org.s2.syncEngine.basicSyncStore.SyncStore',
 		this.initDownloadStore();	
 	},
 	
+	/**
+	 * Metodo usato nei test. Un istanza di un oggetto che eredita da SyncStore,
+	 * sarà in grado tramite questo metodo, di provare di essere un SyncStore.
+	 */
 	getParent: function()
 	{
-		//metodo usato nei test. Un istanza di un oggetto che eredita da SyncStore, sarà in grado tramite questo metodo, di provare di essere un SyncStore
 		return 'org.s2.syncEngine.basicSyncStore.SyncStore';
 	},
 	
-	//metodo usato per la creazione dello store di commit
+	/**
+	 * Metodo usato per la creazione dello store di commit.
+	 */
 	initCommitStore: function()
 	{
 		//console.log("------ onInitCommitStore ------");
@@ -146,6 +225,9 @@ Ext.define('org.s2.syncEngine.basicSyncStore.SyncStore',
 		myFactory.destroy();
 	},
 	
+	/**
+	 * Metodo usato per la creazione dello store di download.
+	 */
 	initDownloadStore: function()
 	{
 		//console.log("------ onInitDownloadStore ------");
@@ -169,19 +251,23 @@ Ext.define('org.s2.syncEngine.basicSyncStore.SyncStore',
 		myFactory.destroy();
 	},
 	
-	//metodo usato per rimuovere ogni elemento dal SyncStore (inteso come store locale)
+	/**
+	 * Metodo usato per rimuovere ogni elemento dal SyncStore (inteso come store locale).
+	 */
 	clearTable: function()
 	{
 		//console.log("------ onClearTable ------");
 		
 		this.getProxy().dropTable();
-
 		this.removeAll();
 		this.sync();
 		//segnalo il termine della procedura di clear dello store
 		this.fireEvent('clearComplete', this);
 	},
 	
+	/**
+	 * Metodo usato per avviare il download dei record dal server.
+	 */
 	download: function()
 	{
 		//console.log("------ Download avviato ------");
@@ -197,6 +283,9 @@ Ext.define('org.s2.syncEngine.basicSyncStore.SyncStore',
 		return true;
 	},
 	
+	/**
+	 * Metodo lanciato dal listener {@link clearComplete} per processare una richiesta di download.
+	 */
 	downloadTemplate: function()
 	{
 		//console.log("------ onDownloadTemplate ------");
@@ -219,7 +308,10 @@ Ext.define('org.s2.syncEngine.basicSyncStore.SyncStore',
 		this.setDisableDownload(false);
 	},
 	
-	//metodo usato per applicare le modifiche avvenute localmente, ai dati scaricaricati in seguito all'esecuzione di this.download()
+	/**
+	 * Metodo usato per applicare le modifiche avvenute localmente ai dati scaricaricati
+	 * in seguito all'esecuzione di {@link download}.
+	 */
 	applyLocalChange: function(storeName, idName, commitName)
 	{
 		//console.log("------ onApplyLocalChange ------");
@@ -242,7 +334,9 @@ Ext.define('org.s2.syncEngine.basicSyncStore.SyncStore',
 		});
 	},
 	
-	//metodo usato per inviare i dati al server.
+	/**
+	 * Metodo usato per inviare i dati al server.
+	 */
 	upload: function()
 	{
 		//console.log("------ Upload avviato ------");
@@ -314,6 +408,11 @@ Ext.define('org.s2.syncEngine.basicSyncStore.SyncStore',
 		return numElem;
 	},
 
+	/**
+	 * Metodo usato per l'esecuzione di un'operazione di add di un record.
+	 *
+	 * @param {Ext.data.Model} toAdd Record da aggiungere allo store.
+	 */
 	addCommit: function(toAdd)
 	{
 		var myOperation = Ext.create('AddCommit',
@@ -328,6 +427,11 @@ Ext.define('org.s2.syncEngine.basicSyncStore.SyncStore',
 		this.executeOperation(myOperation);
 	},
 	
+	/**
+	 * Metodo usato per l'esecuzione di un'operazione di update di un record.
+	 *
+	 * @param {Ext.data.Model} toUpdate Record da aggiornare.
+	 */
 	updateCommit: function(toUpdate)
 	{
 		var myOperation = Ext.create('UpdateCommit',
@@ -343,6 +447,11 @@ Ext.define('org.s2.syncEngine.basicSyncStore.SyncStore',
 		this.executeOperation(myOperation);
 	},	
 	
+	/**
+	 * Metodo usato per l'esecuzione di un'operazione di delete di un record.
+	 *
+	 * @param {Ext.data.Model} toDelete Record da eliminare.
+	 */
 	deleteCommit: function(toDelete)
 	{
 		var myOperation = Ext.create('DeleteCommit',
@@ -356,7 +465,9 @@ Ext.define('org.s2.syncEngine.basicSyncStore.SyncStore',
 		this.executeOperation(myOperation);
 	},
 	
-	//comando generale per l'esecuzione di una classe derivata da StoreOperation
+	/**
+	 * Metodo generale per l'esecuzione di un'operazione derivata da StoreOperation.
+	 */
 	executeOperation: function(myOperation)
 	{
 		myOperation.execute();

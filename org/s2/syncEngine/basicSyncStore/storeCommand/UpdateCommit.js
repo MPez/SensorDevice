@@ -1,8 +1,14 @@
+/**
+ * UpdateCommit rappresenta un'operazione di aggiornamento di un record in uno store.
+ */
 Ext.define('org.s2.syncEngine.basicSyncStore.storeCommand.UpdateCommit',
 {
 	extend: 'org.s2.syncEngine.basicSyncStore.storeCommand.StoreOperation',
 	alias: 'UpdateCommit',
 	
+	/**
+	 * Metodo che esegue l'operazione di aggiornamento del record nello store.
+	 */
 	execute: function()
 	{
 		console.log('-----------------------------updateCommit()----------------------------------');

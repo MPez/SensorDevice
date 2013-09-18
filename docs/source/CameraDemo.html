@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='SensorDevice-view-CameraDemo'>/**
+</span> * CameraDemo rappresenta la vista dove sono presenti i pulsanti da utilizzare
+ * per la cattura di immagini dalla fotocamera o dalla galleria del dispositivo.
+ */
+Ext.define('SensorDevice.view.CameraDemo', {
+    extend: 'Ext.Panel',
+    requires: [
+        'Ext.TitleBar'
+    ],
+    alias: 'widget.camerademo',
+    
+    config: {
+<span id='SensorDevice-view-CameraDemo-cfg-styleHtmlContent'>        styleHtmlContent: true,
+</span><span id='SensorDevice-view-CameraDemo-cfg-items'>        items: [
+</span>            /*
+            * Barra del titolo che contiene il pulsante per tornare alla pagina principale
+            */
+            {
+                xtype: 'titlebar',
+                docked: 'top',
+                title: 'Camera Demo',
+                items: [
+                    {
+                        xtype: 'button',
+                        itemId: 'backButton',
+                        ui: 'back',
+                        iconCls: 'arrow_left',
+                        iconMask: true
+                    }
+                ]
+            },
+            /*
+             * Pulsante per la cattura di un'immagine tramite la fotocamera
+             */
+            {
+                xtype: 'button',
+                itemId: 'cameraButton',
+                text: 'Take a picture',
+                margin: '0 0 10 0',
+                height: 40
+            },
+            /*
+             * Pulsante per il caricamento di un'immagine dalla galleria
+             */
+            {
+                xtype: 'button',
+                itemId: 'galleryButton',
+                text: 'Load from gallery',
+                margin: '0 0 50 0',
+                height: 40
+            }
+        ],
+        
+<span id='SensorDevice-view-CameraDemo-cfg-listeners'>        listeners: [
+</span>            {
+                delegate: '#cameraButton',
+                event: 'tap',
+                fn: 'onCameraButtonTap'
+            },
+            {
+                delegate: '#galleryButton',
+                event: 'tap',
+                fn: 'onGalleryButtonTap'
+            }
+        ]
+    },
+    
+<span id='SensorDevice-view-CameraDemo-method-onCameraButtonTap'>    /**
+</span>     * Metodo che cattura l'evento tap del pulsante cameraButton e rilancia l'evento
+     * che verrà catturato dal controller
+     */
+    onCameraButtonTap: function(scope, e, eOpts) {
+        console.log('onCameraButtonTap');
+<span id='SensorDevice-view-CameraDemo-event-cameraButtonCommand'>        /**
+</span>         * @event
+         * Lanciato alla pressione del pulsante cameraButton
+         * @param {Ext.Component} this
+         */
+        this.fireEvent('cameraButtonCommand', this);
+    },
+    
+<span id='SensorDevice-view-CameraDemo-method-onGalleryButtonTap'>    /**
+</span>     * Metodo che cattura l'evento tap del pulsante galleryButton e rilancia l'evento
+     * che verrà catturato dal controller
+     */
+    onGalleryButtonTap: function(scope, e, eOpts) {
+        console.log('onGalleryButtonTap');
+<span id='SensorDevice-view-CameraDemo-event-galleryButtonCommand'>        /**
+</span>         * @event
+         * Lanciato alla pressione del pulsante galleryButton
+         * @param {Ext.Component} this
+         */
+        this.fireEvent('galleryButtonCommand', this);
+    }
+});</pre>
+</body>
+</html>

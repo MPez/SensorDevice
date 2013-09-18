@@ -15,7 +15,7 @@
 
 //<debug>
 Ext.Loader.setPath({
-    'Ext': 'touch/src',
+    'Ext': 'touch/src'
     //'org': 'org'
 });
 //</debug>

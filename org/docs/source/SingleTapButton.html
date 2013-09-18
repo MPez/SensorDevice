@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='org-s2-singleEventItem-button-SingleTapButton'>/**
+</span> * SingleTapButton specializza un pulsante aggiungendo due eventi che specificano
+ * se il pulsante è stato premuto una sola volta oppure due.
+ * Necessario per evitare il lancio di troppi eventi asincroni con relative chiamate verso
+ * un server.
+ */
+Ext.define('org.s2.singleEventItem.button.SingleTapButton', 
+{
+    extend : 'Ext.Button',
+    xtype  : 'stbutton',
+
+<span id='org-s2-singleEventItem-button-SingleTapButton-method-initialize'>    /**
+</span>     * Metodo di inizializzazione della classe.
+     */
+    initialize : function() {
+        var me = this;
+
+        me.element.on({
+            scope     : me,
+            singletap : 'onSingleTap',
+            doubletap : 'onDoubleTap'
+        });
+
+        me.callParent();
+    },
+
+<span id='org-s2-singleEventItem-button-SingleTapButton-method-onSingleTap'>    /**
+</span>     * Metodo che cattura l'evento di tap singolo e rilancia l'evento.
+     */
+    onSingleTap : function () {
+<span id='org-s2-singleEventItem-button-SingleTapButton-event-singletap'>        /**
+</span>         * @event
+         * Lanciato ad ogni tap singolo.
+         *
+         * @param {Ext.Component} this
+         */
+        this.fireEvent('singletap', this);
+    },
+
+<span id='org-s2-singleEventItem-button-SingleTapButton-method-onDoubleTap'>    /**
+</span>     * Metodo che cattura l'evento di tap doppio e rilancia l'evento.
+     */
+    onDoubleTap : function () {
+<span id='org-s2-singleEventItem-button-SingleTapButton-event-doubletap'>        /**
+</span>         * @event
+         * Lanciato ad ogni tap doppio.
+         *
+         * @param {Ext.Component} this
+         */
+        this.fireEvent('doubletap', this);
+    }
+});</pre>
+</body>
+</html>

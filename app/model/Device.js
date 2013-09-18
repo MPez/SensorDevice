@@ -10,12 +10,19 @@ Ext.define('SensorDevice.model.Device', {
     ],
     
     config: {
+        /**
+         * @cfg
+         * Campi dati.
+         */
         fields: [
             {name: 'deviceId', type: 'int'},
             {name: 'name', type: 'string'},
             {name: 'description', type: 'string'}
         ],
-
+        /**
+         * @cfg
+         * Validazioni per i campi dati.
+         */
         validations: [
             {type: 'presence', field: 'deviceId'},
             {type: 'presence', field: 'name', message: 'Please enter a name for this device.'}

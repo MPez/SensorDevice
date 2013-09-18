@@ -1,3 +1,6 @@
+/**
+ * IndexIDModel rappresenta il modello dei dati per la gestione degli id degli store.
+ */
 Ext.define('org.s2.syncEngine.idHandler.IndexIDModel',
 {
 	extend: 'Ext.data.Model',
@@ -5,6 +8,10 @@ Ext.define('org.s2.syncEngine.idHandler.IndexIDModel',
 	
 	config:
 	{
+		/**
+		 * @cfg
+		 * Campi dati.
+		 */
 		fields:
 		[
 			{ name: 'storeID', type: 'string' },

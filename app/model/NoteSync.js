@@ -5,6 +5,10 @@ Ext.define('SensorDevice.model.NoteSync', {
     extend: 'Ext.data.Model',
     
     config: {
+        /**
+         * @cfg
+         * Campi dati.
+         */
         fields: [
             {name: 'noteID', type: 'string'},
             {name: 'author', type: 'string'},
@@ -12,7 +16,10 @@ Ext.define('SensorDevice.model.NoteSync', {
             {name: 'title', type: 'string'},
             {name: 'narrative', type: 'string'}
         ],
-
+        /**
+         * @cfg
+         * Validazioni per i campi dati.
+         */
         validations: [
             {type: 'presence', field: 'author'},
             {type: 'presence', field: 'dateCreated'},

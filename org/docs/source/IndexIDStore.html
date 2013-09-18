@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='org-s2-syncEngine-idHandler-IndexIDStore'>/**
+</span> * IndexIDStore rappresenta lo store per la gestione degli id.
+ */
+Ext.define('org.s2.syncEngine.idHandler.IndexIDStore',
+{
+	extend: 'Ext.data.Store',
+	alias: 'IndexIDStore',
+	requires: 
+	[
+		'org.s2.syncEngine.idHandler.IndexIDModel',
+		'org.s2.syncEngine.idHandler.IndexIDProxy'
+	],
+	
+	config:
+	{
+<span id='org-s2-syncEngine-idHandler-IndexIDStore-cfg-model'>		/**
+</span>		 * @cfg
+		 * Modello dei dati di riferimento.
+		 */
+		model: 'org.s2.syncEngine.idHandler.IndexIDModel',
+<span id='org-s2-syncEngine-idHandler-IndexIDStore-cfg-storeId'>		/**
+</span>		 * @cfg
+		 * Nome identificativo dello store.
+		 */
+		storeId: 'IndexIDStore',
+<span id='org-s2-syncEngine-idHandler-IndexIDStore-cfg-autoLoad'>		/**
+</span>		 * @cfg
+		 * Impostazione di autocaricamento dello store.
+		 */
+		autoLoad: true,
+		//autoSync: true,
+<span id='org-s2-syncEngine-idHandler-IndexIDStore-cfg-proxy'>		/**
+</span>		 * @cfg
+		 * Tipologia di proxy utilizzato.
+		 */
+		proxy:
+		{
+			type: 'sql'
+		},
+<span id='org-s2-syncEngine-idHandler-IndexIDStore-cfg-listeners'>		/**
+</span>		 * @cfg
+		 * Metodi per la gestione degli eventi dello store.
+		 */
+		listeners:
+		{
+<span id='org-s2-syncEngine-idHandler-IndexIDStore-method-load'>			/**
+</span>			 * Listener per la comunicazione del completamento del load.
+			 */
+			load: function(scope, records, successful, operation, eOpts )
+			{
+				console.log('IndexIDStore caricato');
+			}
+		}
+	},
+	
+<span id='org-s2-syncEngine-idHandler-IndexIDStore-method-constructor'>	/**
+</span>	 * Costruttore ridefinito
+	 *
+	 * @param {Object} conf Parametri di configurazione.
+	 */
+	constructor: function(conf) 
+	{
+		this.callParent(arguments);
+		this.setStoreId('IndexIDStore');
+	},
+	
+<span id='org-s2-syncEngine-idHandler-IndexIDStore-method-loadStoreIndex'>	/*
+</span>	 * Metodo usato per caricare uno store toLoad nel sistema.
+	 * Tale operazione comporta la creazione di una entry del modello IndexIDModel,
+	 * avente come campo storeID il nome di toLoad.
+	 *
+	 * @param {String} toLoad Nome dello store da caricare.
+	 */
+	loadStoreIndex: function(toLoad)
+	{
+		if(this.find('storeID', toLoad) == -1)
+		{
+			var newRecord = Ext.create('org.s2.syncEngine.idHandler.IndexIDModel',{ storeID: toLoad });
+			this.add(newRecord);
+			this.sync();
+			return true;
+		}
+		return false;
+	},
+	
+<span id='org-s2-syncEngine-idHandler-IndexIDStore-method-increment'>	/*
+</span>	 * Metodo usato per incrementare il valore contenuto in indexCount.
+	 *
+	 * @param {String} toIncrement Nome identificativo dello store il cui indice deve essere incrementato.
+	 * @return {Number} Valore incrementato dell'indice dello store.
+	 */
+	increment: function(toIncrement)
+	{
+		try
+		{
+			var newID = this.getAt(this.find('storeID', toIncrement)).get('indexCount');
+			newID += 1;
+			return newID;
+		}
+		catch(err)
+		{
+			return 1;
+		}
+	},
+	
+<span id='org-s2-syncEngine-idHandler-IndexIDStore-method-getNewID'>	/*
+</span>	 * Metodo usato da un SyncStore registrato nel sistema per richiedere la restituzione del prossimo id valido
+	 * da usare per la registrazione del nuovo record.
+	 *
+	 * @param {String} toReturn Nome identificativo dello store per il quale si richiede un nuovo id.
+	 * @return {Number} Valore del nuovo id utilizzabile dallo store.
+	 */
+	getNewID: function(toReturn)
+	{
+		var toDelete = toReturn;
+		newID = this.increment(toReturn);
+		this.removeAt(this.find('storeID', toDelete));
+		this.sync();
+		
+		newRecord = Ext.create('org.s2.syncEngine.idHandler.IndexIDModel',{ storeID: toReturn, indexCount: newID});
+		this.add(newRecord);
+		this.sync();
+		
+		return newID;
+	}
+});</pre>
+</body>
+</html>

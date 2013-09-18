@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='SensorDevice-view-DeviceInfoEditor'>/**
+</span> * DeviceInfoEditor rappresenta la vista che fornisce le informazione base del dispositivo
+ * utili a identificarlo univocamente.
+ */
+Ext.define('SensorDevice.view.DeviceInfoEditor', {
+    extend: 'Ext.form.Panel',
+    requires: [
+        'Ext.form.FieldSet',
+        'Ext.field.Text',
+        'Ext.TitleBar'
+    ],
+    alias: 'widget.deviceinfoeditor',
+    
+    config: {
+<span id='SensorDevice-view-DeviceInfoEditor-cfg-items'>        items: [
+</span>            /*
+             * Barra del titolo che contiene i pulsanti di ritorno alla pagina principale
+             * e di salvataggio delle informazioni del dispositivo.
+             */
+            {
+                xtype: 'titlebar',
+                docked: 'top',
+                title: 'Edit device info',
+                defaults: {
+                    xtype: 'button',
+                    iconMask: true
+                },
+                items: [
+                    {
+                        itemId: 'backButton',
+                        ui: 'back',
+                        iconCls: 'arrow_left',
+                        align: 'left'
+                    },
+                    {
+                        itemId: 'saveDeviceButton',
+                        iconCls: 'add',
+                        align: 'right'
+                    }
+                ]
+            },
+            /*
+             * Form contentente i campi informativi del dispositivo.
+             */
+            {
+                xtype: 'fieldset',
+                title: 'Device informations',
+                instructions: 'Write or modify the information about the device',
+                items: [
+                    {
+                        xtype: 'textfield',
+                        name: 'name',
+                        label: 'Device name',
+                        required: true
+                    },
+                    {
+                        xtype: 'textfield',
+                        name: 'description',
+                        label: 'Description'
+                    }
+                ]
+            }
+        ]
+    }
+});</pre>
+</body>
+</html>

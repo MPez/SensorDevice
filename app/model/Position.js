@@ -6,7 +6,15 @@ Ext.define('SensorDevice.model.Position', {
     extend: 'Ext.data.Model',
     
     config: {
+        /**
+         * @cfg
+         * Tipo di indentificatore per i record.
+         */
         identifier: 'uuid',
+        /**
+         * @cfg
+         * Campi dati.
+         */
         fields: [
             {name: 'latitude', type: 'string'},
             {name: 'longitude', type: 'string'},

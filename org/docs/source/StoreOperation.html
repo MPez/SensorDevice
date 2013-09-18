@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='org-s2-syncEngine-basicSyncStore-storeCommand-StoreOperation'>/**
+</span> * StoreOperation rappresenta la classe base per le operazioni di add, update e commit.
+ */
+Ext.define('org.s2.syncEngine.basicSyncStore.storeCommand.StoreOperation',
+{
+	extend: 'Ext.Class',
+	alias: 'StoreOperation',
+	
+	config:
+	{
+<span id='org-s2-syncEngine-basicSyncStore-storeCommand-StoreOperation-cfg-recordToUse'>		/**
+</span>		 * @cfg {Ext.data.Model}
+		 * Record sul quale effettuare l'operazione.
+		 */
+		recordToUse: 'null',
+<span id='org-s2-syncEngine-basicSyncStore-storeCommand-StoreOperation-cfg-tableID'>		/**
+</span>		 * @cfg
+		 * Nome identificativo della tabella del database.
+		 */
+		tableID: 'null',
+<span id='org-s2-syncEngine-basicSyncStore-storeCommand-StoreOperation-cfg-deviceId'>		/**
+</span>		 * @cfg
+		 * Nome identificativo del dispositivo.
+		 */
+		deviceId: 'null',
+<span id='org-s2-syncEngine-basicSyncStore-storeCommand-StoreOperation-cfg-commitModel'>		/**
+</span>		 * @cfg {Ext.data.Model}
+		 * Modello dei dati di riferimento dello store di commit.
+		 */
+		commitModel: 'null',
+<span id='org-s2-syncEngine-basicSyncStore-storeCommand-StoreOperation-cfg-commitStore'>		/**
+</span>		 * @cfg
+		 * Nome identificativo dello store di commit.
+		 */
+		commitStore: 'null',
+<span id='org-s2-syncEngine-basicSyncStore-storeCommand-StoreOperation-cfg-syncStore'>		/**
+</span>		 * @cfg {Object}
+		 * Riferimento allo store sul quale viene eseguita l'operazione.
+		 */
+		syncStore: 'null'
+	},
+<span id='org-s2-syncEngine-basicSyncStore-storeCommand-StoreOperation-method-constructor'>	/**
+</span>	 * COstruttore ridefinito.
+	 *
+	 * @param {Object} conf Parametri di configurazione.
+	 * @param {Ext.data.Model} conf.recordToUse Record sul quale effettuare l'operazione.
+	 * @param {String} conf.tableID Nome identificativo della tabella del database.
+	 * @param {String} conf.deviceId Nome identificativo del dispositivo.
+	 * @param {String} conf.commitModel Modello dei dati di riferimento dello store di commit.
+	 * @param {String} conf.commitStore Nome identificativo dello store di commit.
+	 * @param {String} conf.scope Riferimento allo store sul quale viene eseguita l'operazione.
+	 */
+	constructor: function(conf)
+	{
+		this.setRecordToUse(conf.recordToUse);
+		this.setTableID(conf.tableID);
+		this.setDeviceId(conf.deviceId);
+		this.setCommitModel(conf.commitModel);
+		this.setCommitStore(conf.commitStore);
+		this.setSyncStore(conf.scope);
+	}
+});</pre>
+</body>
+</html>

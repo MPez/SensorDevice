@@ -1,9 +1,15 @@
+/**
+ * AddCommit rappresenta un'operazione di inserimento di un nuovo record in uno store.
+ */
 Ext.define('org.s2.syncEngine.basicSyncStore.storeCommand.AddCommit',
 {
 	extend: 'org.s2.syncEngine.basicSyncStore.storeCommand.StoreOperation',
 	requires: 'org.s2.syncEngine.basicSyncStore.storeCommand.UpdateCommit',
 	alias: 'AddCommit',
 	
+	/**
+	 * Metodo che esegue l'operazione di inserimento del record nello store.
+	 */
 	execute: function()
 	{
 		console.log('------------------------------addCommit()------------------------------------');

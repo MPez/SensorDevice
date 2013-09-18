@@ -1,8 +1,14 @@
+/**
+ * DeleteCommit rappresenta un'operazione di cancellazione di un record in uno store.
+ */
 Ext.define('org.s2.syncEngine.basicSyncStore.storeCommand.DeleteCommit',
 {
 	extend: 'org.s2.syncEngine.basicSyncStore.storeCommand.StoreOperation',
 	alias: 'DeleteCommit',
 	
+	/**
+	 * Metodo che esegue l'operazione di cancellazione del record dallo store.
+	 */
 	execute: function()
 	{
 		console.log('-----------------------------deleteCommit()----------------------------------');

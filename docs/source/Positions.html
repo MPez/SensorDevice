@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='SensorDevice-store-Positions'>/**
+</span> * Positions rappresenta lo store webSQL utilizzato per memorizzare
+ * la posizione del dispositivo acquisita tramite i sensori di posizionamento
+ */
+Ext.define('SensorDevice.store.Positions', {
+    extend: 'Ext.data.Store',
+    requires: [
+        'Ext.data.proxy.Sql'
+    ],
+    
+    config: {
+<span id='SensorDevice-store-Positions-cfg-model'>        model: 'SensorDevice.model.Position',
+</span><span id='SensorDevice-store-Positions-cfg-storeId'>        storeId: 'Positions',
+</span>        
+<span id='SensorDevice-store-Positions-cfg-proxy'>        proxy: {
+</span>            type: 'sql',
+            database: 'SensorDeviceDb'
+        }
+    }
+});</pre>
+</body>
+</html>

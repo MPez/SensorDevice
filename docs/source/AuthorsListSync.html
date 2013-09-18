@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='SensorDevice-view-AuthorsListSync'>/**
+</span> * AuthorsListSync rappresenta la vista che visualizza l'elenco degli autori disponibili.
+ */
+Ext.define('SensorDevice.view.AuthorsListSync', {
+    extend: 'Ext.Panel',
+    requires: [
+        'Ext.dataview.List'
+    ],
+    alias: 'widget.authorslistsync',
+    
+    config: {
+<span id='SensorDevice-view-AuthorsListSync-cfg-layout'>        layout: 'card',
+</span><span id='SensorDevice-view-AuthorsListSync-cfg-modal'>        modal: true,
+</span><span id='SensorDevice-view-AuthorsListSync-cfg-hideOnMaskTap'>        hideOnMaskTap: true,
+</span><span id='SensorDevice-view-AuthorsListSync-cfg-width'>        width: 200,
+</span><span id='SensorDevice-view-AuthorsListSync-cfg-height'>        height: 300,
+</span>        
+<span id='SensorDevice-view-AuthorsListSync-cfg-items'>        items: [{
+</span>            xtype: 'list',
+            store: 'Authors',
+            itemId: 'authorsList',
+            loadingText: 'Loading authors...',
+            emptyText: '&lt;div class=&quot;author-list-empty-text&quot;&gt;No authors found&lt;/div&gt;',
+            grouped: true,
+            itemTpl: '{name} {surname}'
+        }],
+        
+<span id='SensorDevice-view-AuthorsListSync-cfg-listeners'>        listeners: [{
+</span>            delegate: '#authorsList',
+            event: 'itemtap',
+            fn: 'onAuthorsListItemSingleTap'
+        }]
+    },
+    
+<span id='SensorDevice-view-AuthorsListSync-method-onAuthorsListItemSingleTap'>    /**
+</span>     * Metodo che cattura l'evento tap relativo all'autore selezionato dalla lista;
+     * rilancia l'evento che viene catturato dal controller e nasconde la lista stessa.
+     */
+    onAuthorsListItemSingleTap: function(list, index, target, record, evt, options) {
+        console.log('editAuthorCommand');
+<span id='SensorDevice-view-AuthorsListSync-event-editAuthorCommand'>        /**
+</span>         * @event
+         * Lanciato alla selezione di un record sulla lista.
+         * @param {Ext.Component} this
+         * @param {Ext.data.model} record Istanza dell'autore selezionato
+         */
+        this.fireEvent('editAuthorCommand', this, record);
+        this.hide();
+    }
+});</pre>
+</body>
+</html>

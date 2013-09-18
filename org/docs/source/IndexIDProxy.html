@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='org-s2-syncEngine-idHandler-IndexIDProxy'>/**
+</span> * IndexIDProxy rappresenta il proxy usato con {@link IndexIDStore}.
+ */
+Ext.define('org.s2.syncEngine.idHandler.IndexIDProxy',
+{
+	extend: 'Ext.data.proxy.Sql',
+	alias: 'IndexIDProxy',
+<span id='org-s2-syncEngine-idHandler-IndexIDProxy-method-costructor'>	/**
+</span>	 * Costruttore ridefinito
+	 *
+	 * @param {Object} conf Parametri di configurazione.
+	 * @param {String} conf.dbName Nome del database di riferimento.
+	 */
+	costructor: function(conf)
+	{
+		this.setDatabase(conf.dbName);
+		this.callParent(arguments);
+	}
+});</pre>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='SensorDevice-view-AuthorEditorSync'>/**
+</span> * AuthorEditorSync rappresenta la vista della form che contiene i campi propri
+ * dell'autore selezionato tramite la lista {@link AuthorsListSync} visualizzata
+ * tramite la vista {@link MyNotes}; questi campi possono essere modificati e salvati.
+ */
+Ext.define('SensorDevice.view.AuthorEditorSync', {
+    extend: 'Ext.form.Panel',
+    requires: [
+        'Ext.form.FieldSet',
+        'Ext.field.Text',
+        'Ext.field.TextArea',
+        'Ext.TitleBar'
+    ],
+    alias: 'widget.authoreditorsync',
+
+    config: {
+        
+<span id='SensorDevice-view-AuthorEditorSync-cfg-items'>        items: [
+</span>            /*
+             * Barra del titolo contenente i pulsanti di ritorno alla pagina principale,
+             * di salvataggio ed eliminazione dell'autore
+             */
+            {
+                xtype: 'titlebar',
+                docked: 'top',
+                title: 'Edit author',
+                defaults: {
+                    xtype: 'button',
+                    iconMask: true
+                },
+                items: [
+                    {
+                        itemId: 'backButton',
+                        ui: 'back',
+                        iconCls: 'arrow_left',
+                        align: 'left'
+                    },
+                    {
+                        itemId: 'saveAuthorButton',
+                        iconCls: 'add',
+                        align: 'right'
+                    },
+                    {
+                        iconCls: 'trash',
+                        itemId: 'deleteAuthorButton',
+                        align: 'right'
+                    }
+                ]
+            },
+            /*
+             * Form contenente i campi dell'autore modificabili dall'utente
+             */
+            {
+                xtype: 'fieldset',
+                title: 'Author informations',
+                instructions: 'Write or modify an author',
+                items: [
+                    {
+                        xtype: 'textfield',
+                        name: 'name',
+                        label: 'Name',
+                        required: true
+                    },
+                    {
+                        xtype: 'textfield',
+                        name: 'surname',
+                        label: 'Surname',
+                        required: true
+                    }
+                ]
+            }
+        ]
+    }
+});</pre>
+</body>
+</html>

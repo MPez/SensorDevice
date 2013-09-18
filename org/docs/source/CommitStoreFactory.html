@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='org-s2-syncEngine-basicSyncStore-upload-CommitStoreFactory'>/**
+</span> * CommitStoreFactory rappresenta la classe factory usata per definire e creare
+ * lo store {@link CommitStore}.
+ */
+Ext.define('org.s2.syncEngine.basicSyncStore.upload.CommitStoreFactory',
+{
+	extend: 'Ext.Class',
+	alias: 'CommitStoreFactory',
+	
+	config:
+	{
+<span id='org-s2-syncEngine-basicSyncStore-upload-CommitStoreFactory-cfg-pathModel'>		/**
+</span>		 * @cfg
+		 * Nome completo del modello.
+		 */
+		pathModel: 'null',
+<span id='org-s2-syncEngine-basicSyncStore-upload-CommitStoreFactory-cfg-nameCommitStore'>		/**
+</span>		 * @cfg
+		 * Nome da usare per la creazione dello store.
+		 */
+		nameCommitStore: 'null',
+<span id='org-s2-syncEngine-basicSyncStore-upload-CommitStoreFactory-cfg-dbName'>		/**
+</span>		 * @cfg
+		 * Nome del database di riferimento.
+		 */
+		dbName: 'null'
+	},
+<span id='org-s2-syncEngine-basicSyncStore-upload-CommitStoreFactory-method-constructor'>	/**
+</span>	 * Costruttore ridefinito.
+	 *
+	 * @param {String} conf.pathModel Nome completo del modello.
+	 * @param {String} conf.nameCommitStore Nome da usare per la creazione dello store.
+	 * @param {String} conf.dbName Nome del database di riferimento.
+	 */
+	constructor: function(conf)
+	{
+		this.setPathModel(conf.pathModel);
+		this.setNameCommitStore(conf.nameCommitStore);
+		this.setDbName(conf.myDbName);
+	},
+<span id='org-s2-syncEngine-basicSyncStore-upload-CommitStoreFactory-method-createCommitStore'>	/**
+</span>	 * Metodo usato per creare un'istanza di CommitStore con le configurazioni desiderate.
+	 */
+	createCommitStore: function()
+	{	
+		return Ext.create('Ext.data.Store', 
+		{
+			model: Ext.define(this.getPathModel() + 'CommitModel', 
+			{
+				extend: this.getPathModel(),
+				config: 
+				{
+					fields: [{ name: 'typeCommit', type: 'string', defaultValue: 'a'}]
+				}
+			}),
+			
+			storeId: this.getNameCommitStore(),
+			autoLoad: false,
+
+			proxy:
+			{
+				type: 'sql',
+				table: this.getNameCommitStore(),
+				database: this.getDbName()
+			}
+		});
+	}
+});</pre>
+</body>
+</html>

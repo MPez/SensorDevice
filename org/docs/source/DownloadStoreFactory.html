@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='org-s2-syncEngine-basicSyncStore-download-DownloadStoreFactory'>/**
+</span> * DownloadStoreFactory rappresenta la classe factory usata per definire e creare
+ * lo store {@link DownloadStore}.
+ */
+Ext.define('org.s2.syncEngine.basicSyncStore.download.DownloadStoreFactory',
+{
+	extend: 'Ext.Class',
+	alias: 'DownloadStoreFactory',
+	
+	config:
+	{
+<span id='org-s2-syncEngine-basicSyncStore-download-DownloadStoreFactory-cfg-url'>		/**
+</span>		 * @cfg
+		 * Indirizzo del server.
+		 */
+		url: 'null',
+<span id='org-s2-syncEngine-basicSyncStore-download-DownloadStoreFactory-cfg-appName'>		/**
+</span>		 * @cfg
+		 * Nome dell'applicazione.
+		 */
+		appName: 'null',
+<span id='org-s2-syncEngine-basicSyncStore-download-DownloadStoreFactory-cfg-modelName'>		/**
+</span>		 * @cfg
+		 * Nome del modello.
+		 */
+		modelName: 'null',
+<span id='org-s2-syncEngine-basicSyncStore-download-DownloadStoreFactory-cfg-pathModel'>		/**
+</span>		 * @cfg
+		 * Nome completo del modello.
+		 */
+		pathModel: 'null',
+<span id='org-s2-syncEngine-basicSyncStore-download-DownloadStoreFactory-cfg-nameDownloadStore'>		/**
+</span>		 * @cfg
+		 * Nome da usare per la creazione dello store.
+		 */
+		nameDownloadStore: 'null'
+	},
+<span id='org-s2-syncEngine-basicSyncStore-download-DownloadStoreFactory-method-constructor'>	/**
+</span>	 * Costruttore ridefinito.
+	 *
+	 * @param {Object} conf Parametri di configurazione.
+	 * @param {String} conf.url Indirizzo del server.
+	 * @param {String} conf.appName Nome dell'applicazione.
+	 * @param {String} conf.modelName Nome del modello.
+	 * @param {String} conf.pathModel Nome completo del modello.
+	 * @param {String} conf.nameDownloadStore Nome da usare per la creazione dello store.
+	 */
+	constructor: function(conf)
+	{
+		this.setUrl(conf.url);
+		this.setAppName(conf.appName);
+		this.setModelName(conf.modelName);
+		this.setPathModel(conf.pathModel);
+		this.setNameDownloadStore(conf.nameDownloadStore);
+	},
+<span id='org-s2-syncEngine-basicSyncStore-download-DownloadStoreFactory-method-createDownloadStore'>	/**
+</span>	 * Metodo usato per creare un'istanza di DownloadStore con le configurazioni desiderate.
+	 *
+	 * @param {String} patherID 
+	 * @return {Ext.data.Store} Riferimento allo store creato.
+	 */
+	createDownloadStore: function(patherID)
+	{	
+		var myDownloadStore = Ext.create('Ext.data.Store', 
+		{
+			model: this.getPathModel(),
+			storeId: this.getNameDownloadStore(),
+			autoLoad: false,
+			proxy:
+			{
+				type: 'jsonp',
+				
+				url: this.getUrl(),
+				model: this.getAppName() + '.model.' + this.getModelName(),
+				
+				reader: 
+				{
+					type: 'json'
+				}
+			},
+			listeners:
+			{
+				load: function(scope, records, successful, operation, eOpts )
+				{
+					Ext.getStore(patherID).fireEvent('downloadComplete', this);
+				}
+			}
+		});
+		
+		return myDownloadStore;
+	}
+});</pre>
+</body>
+</html>
