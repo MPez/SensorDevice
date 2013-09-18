@@ -1,3 +1,8 @@
+/**
+ * SensorDevice rappresenta il controller che si occupa di gestire tutti gli eventi generati
+ * dalle diverse pagine disponibili nell'app, dimostrative dell'utilizzo dei diversi sensori
+ * disponibili sul dispositivo.
+ */
 Ext.define('SensorDevice.controller.SensorDevices', {
     extend: 'Ext.app.Controller',
     requires: [
@@ -9,32 +14,46 @@ Ext.define('SensorDevice.controller.SensorDevices', {
     ],
     
     config: {
+        /**
+         * @cfg
+         * Riferimenti alle pagine controllate.
+         */
         refs: {
             homeView: 'home',
             cameraDemoView: 'camerademo',
-            galleryDemoView: 'gallerydemo',
-            fileDemoView: 'filedemo'
+            galleryDemoView: 'gallerydemo'
         },
+        /**
+         * @cfg
+         * Metodi di controllo degli eventi lanciati dalle diverse pagine.
+         */
         control: {
             homeView: {
                 itemDiscloseCommand: 'onItemDiscloseCommand',
                 backButtonCommand: 'onBackButtonCommand',
                 loadContactsCommand: 'onLoadContactsCommand',
-                deleteContactsCommand: 'onDeleteContactsCommand',
+                trashContactsCommand: 'onTrashContactsCommand',
                 locationCommand: 'onLocationCommand',
-                mapRenderCommand: 'onMapRenderCommand'
+                mapRenderCommand: 'onMapRenderCommand',
+                positionCommand: 'onPositionCommand',
+                backGeolocationCommand: 'onBackGeolocationCommand',
             },
             cameraDemoView: {
                 cameraButtonCommand: 'onCameraButtonCommand',
                 galleryButtonCommand: 'onGalleryButtonCommand'
-            },
-            fileDemoView: {
-                saveFormCommand: 'onSaveFormCommand',
-                deleteFormCommand: 'onDeleteFormCommand'
             }
         }
     },
     
+    /**
+     * Metodo che cattura l'evento disclose della lista delle funzionalità disponibili.
+     * Se la funzionalità selezionata è FileDemo e non sono presenti record nello store,
+     * viene creato un record fittizio da inserire nella form.
+     * A seconda dell'indice passato come parametro viene visualizzata la pagina corrispondente.
+     * 
+     * @param {Ext.Component} home Scope di riferimento della pagina principale.
+     * @param {Number} index Indice del record selezionato dalla lista.
+     */
     onItemDiscloseCommand: function(home, index) {
         console.log('onItemDIscloseCommand');
         
@@ -63,52 +82,23 @@ Ext.define('SensorDevice.controller.SensorDevices', {
         home.setActiveItem(index+1);
     },
     
-    onSaveFormCommand: function() {
-        console.log('onSaveFormCommand');
-        
-        var fileDemo = this.getFileDemoView();
-        var currentInfo = fileDemo.getRecord();
-        var newValues = fileDemo.getValues();
-        
-        currentInfo.set('name', newValues.name);
-        currentInfo.set('surname', newValues.surname);
-        currentInfo.set('address', newValues.address);
-        currentInfo.set('sex', newValues.sex);
-        currentInfo.set('color', newValues.color);
-        
-        var errors = currentInfo.validate();
-        
-        if (!errors.isValid()) {
-            errors.each(function(error) {
-                Ext.Msg.alert('Wait!', error.getMessage(), Ext.emptyFn);
-            })
-            currentInfo.reject();
-            return;
-        }
-        
-        var personalInfoStore = Ext.getStore('PersonalInfos');
-        personalInfoStore.add(currentInfo);
-        personalInfoStore.sync();
-        
-        
-    },
-    
-    onDeleteFormCommand: function(){
-        console.log('onDeleteFormCommand');
-        
-        var fileDemo = this.getFileDemoView();
-        fileDemo.reset();
-    },
-    
+    /**
+     * Metodo che cattura l'evento di ritorno alla pagina principale visualizzando la pagina corretta.
+     */
     onBackButtonCommand: function(home) {
         console.log('onBackButtonCommand');
-        
         home.setActiveItem(0);
     },
     
-    /*
-     * Sencha Touch camera capture
-     */ 
+    //------------------------------------------------------//
+    //               Sencha Touch Device Camera             //
+    //------------------------------------------------------//
+    
+    /**
+     * Metodo che cattura l'evento di apertura della fotocamera del dispositivo; agisce effettuando
+     * una chiamata al metodo capture passando un oggetto di configurazione con le impostazioni desiderate
+     * per la catturae le funzioni da chiamare in caso di successo o fallimento.
+     */
     onCameraButtonCommand: function() {
         console.log('onCameraButtonCommand');
         
@@ -122,13 +112,18 @@ Ext.define('SensorDevice.controller.SensorDevices', {
                 source: 'camera',
                 scope: me,
                 destination: 'file',
-                encoding: 'jpeg'
-                //width: '400',
-                //height: '400'
+                encoding: 'jpeg',
+                width: '400',
+                height: '400'
             }
         );
     },
     
+    /**
+     * Metodo che cattura l'evento di apertura della galleria del dispositivo; agisce effettuando
+     * una chiamata al metodo capture passando un oggetto di configurazione con le impostazioni desiderate
+     * per la catturae le funzioni da chiamare in caso di successo o fallimento.
+     */
     onGalleryButtonCommand: function() {
         console.log('onGalleryButtonCommand');
         
@@ -142,13 +137,20 @@ Ext.define('SensorDevice.controller.SensorDevices', {
                 source: 'library',
                 scope: me,
                 destination: 'file',
-                encoding: 'jpeg'
-                //width: '400',
-                //height: '400'
+                encoding: 'jpeg',
+                width: '400',
+                height: '400'
             }
         );
     },
     
+    /**
+     * Metodo che gestisce il successo dell'operazione di cattura dell'immagine tramite fotocamera
+     * o galleria. Agisce creando un nuovo record e impostando i valori della nuova immagine.
+     * In seguito recupera lo store corretto e registra il nuovo record.
+     *
+     * @param {String} image Uri della nuova immagine catturata.
+     */
     onCaptureSuccess: function(image) {
         console.log('onCaptureSuccess');
         
@@ -163,39 +165,52 @@ Ext.define('SensorDevice.controller.SensorDevices', {
         pictureStore.sync();
     },
     
+    /**
+     * Metodo che gestisce il fallimento dell'operazione di cattura dell'immagine visualizzando
+     * un messaggio di allerta per l'utente.
+     */
     onCaptureFailure: function() {
         console.log('onCaptureFailure');
-        
         Ext.Msg.alert('Error', 'There was an error when acquiring the picture.');
     },
     
-    /*
-     * Sencha Touch contacts
+    //------------------------------------------------------//
+    //             Sencha Touch Device Contacts             //
+    //------------------------------------------------------//
+    
+    /**
+     * Metodo che cattura l'evento di caricamento dei contatti del dispositivo;
+     * agisce effettuando una chiamata al metodo getContacts che ritorna l'elenco dei contatti
+     * presenti nel dispositivo; una volta recuperati i contatti vengono salvati sullo store dedicato.
      */
     onLoadContactsCommand: function() {
         console.log('onLoadContactsCommand');
         
-        var data = [
-            { First: 'toni', Last: 'ciccione'},
-            { First: 'paolino', Last: 'paperino'},
-            { First: 'lupo', Last: 'arturo'}
-        ];
-        
         var contactsStore = Ext.getStore('Contacts');
         var contacts = Ext.device.Contacts.getContacts(true);
-        contactsStore.setData(contacts);
-        //contactsStore.setData(data);
+        contactsStore.add(contacts);
+        contactsStore.sync();
     },
     
-    onDeleteContactsCommand: function() {
-        console.log('onDeleteContactsCommand');
-        
+    /**
+     * Metodo che cattura l'evento di cancellazione dei record dallo store dei contatti.
+     */
+    onTrashContactsCommand: function() {
+        console.log('onTrashContactsCommand');
         var contactsStore = Ext.getStore('Contacts');
         contactsStore.removeAll();
+        contactsStore.sync();
     },
     
-    /*
-     * Sencha Touch geolocation
+    //------------------------------------------------------//
+    //               Sencha Touch Geolocation               //
+    //                   Google Maps API                    //
+    //------------------------------------------------------//
+    
+    /**
+     * Metodo che cattura l'evento di localizzazione del dispositivo; agisce effettuando
+     * una chiamata al metodo getCurrentPosition passando come parametro un oggetto di configurazione
+     * con le opzioni desiderate e le funzioni da chiamare in caso di successo o fallimento.
      */
     onLocationCommand: function() {
         console.log('onLocationCommand');
@@ -212,10 +227,32 @@ Ext.define('SensorDevice.controller.SensorDevices', {
         );
     },
     
+    /**
+     * Metodo che gestisce il successo dell'operazione di localizzazione del dispositivo; agisce
+     * creando un record per salvare nello store la posizione corrente e imposta il nuovo centro
+     * sulla mappa con il relativo marker per visualizzare nella stessa la posizione attuale.
+     *
+     * @param {Object} position Oggetto che rappresenta la posizione corrente, contiene le coordinate.
+     */
     onLocationSuccess: function(position) {
         console.log('onLocationSuccess');
+        console.log(position);
         
-        var mapCmp = this.getHomeView().getAt(5).getComponent('map');
+        var positionStore = Ext.getStore('Positions');
+        var newPosition = Ext.create('SensorDevice.model.Position', {
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+            altitude: position.coords.altitude,
+            accuracy: position.coords.accuracy,
+            altitudeAccuracy: position.coords.altitudeAccuracy,
+            heading: position.coords.heading,
+            speed: position.coords.speed,
+            timestamp: position.timestamp
+        });
+        positionStore.add(newPosition);
+        positionStore.sync();
+        
+        var mapCmp = this.getHomeView().getAt(3).getComponent('map');
         mapCmp.setMapCenter(position.coords);
         mapCmp.setMapOptions({
             zoom: 15
@@ -229,27 +266,54 @@ Ext.define('SensorDevice.controller.SensorDevices', {
         });
     },
     
+    /**
+     * Metodo che gestisce il fallimento dell'operazione di localizzazione avvisando l'utente con un messaggio.
+     */
     onLocationFailure: function() {
         console.log('onLocationFailure');
-        
         Ext.Msg.alert('Error retrieving position', 'Something went wrong!');
     },
     
+    /**
+     * Metodo che cattura l'evento di renderizzazione della mappa.
+     */
     onMapRenderCommand: function(scope, map) {
         console.log('onMapRenderCommand');
         
     },
     
-    //called when the Application is initialized
+    /**
+     * Metodo che catura l'evento di visualizzazione della lista delle posizioni salvate.
+     */
+    onPositionCommand: function(home) {
+        console.log('onPositionCommand');
+        home.setActiveItem(4);
+    },
+    
+    /**
+     * Metodo che cattura l'evento di ritorno alla mappa.
+     */
+    onBackGeolocationCommand: function(home) {
+        console.log('onBackGeolocationCommand');
+        home.setActiveItem(3);
+    },
+    
+    /**
+     * Metodo chiamato all'inizializzazione dell'app.
+     */
     init: function() {
         console.log('init SensorDevices');
     },
     
-    //called when the Application is launched, remove if not needed
+    /**
+     * Metodo chiamato al lancio dell'app; si occupa di caricare gli store utilizzati.
+     *
+     * @param {Ext.app.Application} app
+     */
     launch: function(app) {
         console.log('launch SensorDevices');
         
         Ext.getStore('Pictures').load();
-        Ext.getStore('PersonalInfos').load();
+        Ext.getStore('Positions').load();
     }
 });
