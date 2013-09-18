@@ -1,3 +1,7 @@
+/**
+ * DeviceInfoEditor rappresenta la vista che fornisce le informazione base del dispositivo
+ * utili a identificarlo univocamente.
+ */
 Ext.define('SensorDevice.view.DeviceInfoEditor', {
     extend: 'Ext.form.Panel',
     requires: [
@@ -9,29 +13,35 @@ Ext.define('SensorDevice.view.DeviceInfoEditor', {
     
     config: {
         items: [
+            /*
+             * Barra del titolo che contiene i pulsanti di ritorno alla pagina principale
+             * e di salvataggio delle informazioni del dispositivo.
+             */
             {
                 xtype: 'titlebar',
                 docked: 'top',
                 title: 'Edit device info',
+                defaults: {
+                    xtype: 'button',
+                    iconMask: true
+                },
                 items: [
                     {
-                        xtype: 'button',
                         itemId: 'backButton',
                         ui: 'back',
                         iconCls: 'arrow_left',
-                        iconMask: true,
                         align: 'left'
                     },
                     {
-                        xtype: 'button',
-                        //text: 'Save',
                         itemId: 'saveDeviceButton',
                         iconCls: 'add',
-                        iconMask: true,
                         align: 'right'
                     }
                 ]
             },
+            /*
+             * Form contentente i campi informativi del dispositivo.
+             */
             {
                 xtype: 'fieldset',
                 title: 'Device informations',

@@ -1,3 +1,8 @@
+/**
+ * AuthorEditorSync rappresenta la vista della form che contiene i campi propri
+ * dell'autore selezionato tramite la lista {@link AuthorsListSync} visualizzata
+ * tramite la vista {@link MyNotes}; questi campi possono essere modificati e salvati.
+ */
 Ext.define('SensorDevice.view.AuthorEditorSync', {
     extend: 'Ext.form.Panel',
     requires: [
@@ -11,36 +16,40 @@ Ext.define('SensorDevice.view.AuthorEditorSync', {
     config: {
         
         items: [
+            /*
+             * Barra del titolo contenente i pulsanti di ritorno alla pagina principale,
+             * di salvataggio ed eliminazione dell'autore
+             */
             {
                 xtype: 'titlebar',
                 docked: 'top',
                 title: 'Edit author',
+                defaults: {
+                    xtype: 'button',
+                    iconMask: true
+                },
                 items: [
                     {
-                        xtype: 'button',
                         itemId: 'backButton',
                         ui: 'back',
                         iconCls: 'arrow_left',
-                        iconMask: true,
                         align: 'left'
                     },
                     {
-                        xtype: 'button',
-                        //text: 'Save',
                         itemId: 'saveAuthorButton',
                         iconCls: 'add',
-                        iconMask: true,
                         align: 'right'
                     },
                     {
-                        xtype: 'button',
                         iconCls: 'trash',
-                        iconMask: true,
                         itemId: 'deleteAuthorButton',
                         align: 'right'
                     }
                 ]
             },
+            /*
+             * Form contenente i campi dell'autore modificabili dall'utente
+             */
             {
                 xtype: 'fieldset',
                 title: 'Author informations',

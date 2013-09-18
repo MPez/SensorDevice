@@ -1,3 +1,6 @@
+/**
+ * AuthorSync rappresenta il modello di un autore di una nota utilizzato nella pagina MyNotes
+ */
 Ext.define("SensorDevice.model.AuthorSync", {
     extend: "Ext.data.Model",
     

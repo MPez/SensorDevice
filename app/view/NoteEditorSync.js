@@ -1,3 +1,8 @@
+/**
+ * NoteEditorSync rappresenta la vista della form che contiene i campi propri
+ * della nota selezionata tramite la lista presente in {@link MyNotes};
+ * questi campi possono essere modificati e salvati.
+ */
 Ext.define('SensorDevice.view.NoteEditorSync', {
     extend: 'Ext.form.Panel',
     requires: [
@@ -12,36 +17,40 @@ Ext.define('SensorDevice.view.NoteEditorSync', {
     config: {
         
         items: [
+            /*
+             * Barra del titolo contenente i pulsanti di ritorno alla pagina principale,
+             * di salvataggio ed eliminazione della nota corrente.
+             */
             {
                 xtype: 'titlebar',
                 docked: 'top',
                 title: 'Edit note',
+                defaults: {
+                    xtype: 'button',
+                    iconMask: true
+                },
                 items: [
                     {
-                        xtype: 'button',
                         itemId: 'backButton',
                         ui: 'back',
                         iconCls: 'arrow_left',
-                        iconMask: true,
                         align: 'left'
                     },
                     {
-                        xtype: 'button',
-                        //text: 'Save',
                         iconCls: 'add',
-                        iconMask: true,
                         itemId: 'saveNoteButton',
                         align: 'right'
                     },
                     {
-                        xtype: 'button',
                         iconCls: 'trash',
-                        iconMask: true,
                         itemId: 'deleteNoteButton',
                         align: 'right'
                     }
                 ]
             },
+            /*
+             * Form contenente i campi propri della nota modificabili dall'utente.
+             */
             {
                 xtype: 'fieldset',
                 title: 'Note informations',

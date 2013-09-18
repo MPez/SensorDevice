@@ -1,3 +1,6 @@
+/**
+ * AuthorsListSync rappresenta la vista che visualizza l'elenco degli autori disponibili.
+ */
 Ext.define('SensorDevice.view.AuthorsListSync', {
     extend: 'Ext.Panel',
     requires: [
@@ -29,11 +32,19 @@ Ext.define('SensorDevice.view.AuthorsListSync', {
         }]
     },
     
+    /**
+     * Metodo che cattura l'evento tap relativo all'autore selezionato dalla lista;
+     * rilancia l'evento che viene catturato dal controller e nasconde la lista stessa.
+     */
     onAuthorsListItemSingleTap: function(list, index, target, record, evt, options) {
         console.log('editAuthorCommand');
-        
+        /**
+         * @event
+         * Lanciato alla selezione di un record sulla lista.
+         * @param {Ext.Component} this
+         * @param {Ext.data.model} record Istanza dell'autore selezionato
+         */
         this.fireEvent('editAuthorCommand', this, record);
-        
         this.hide();
     }
 });

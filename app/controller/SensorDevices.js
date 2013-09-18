@@ -47,38 +47,13 @@ Ext.define('SensorDevice.controller.SensorDevices', {
     
     /**
      * Metodo che cattura l'evento disclose della lista delle funzionalità disponibili.
-     * Se la funzionalità selezionata è FileDemo e non sono presenti record nello store,
-     * viene creato un record fittizio da inserire nella form.
      * A seconda dell'indice passato come parametro viene visualizzata la pagina corrispondente.
      * 
      * @param {Ext.Component} home Scope di riferimento della pagina principale.
      * @param {Number} index Indice del record selezionato dalla lista.
      */
     onItemDiscloseCommand: function(home, index) {
-        console.log('onItemDIscloseCommand');
-        
-        if (index == 0) {
-            console.log('onFileDemoForm');
-            
-            var personalInfoStore = Ext.getStore('PersonalInfos');
-            
-            if (personalInfoStore.getCount() == 0) {
-                var newInfo = Ext.create('SensorDevice.model.PersonalInfo', {
-                    name: 'Soluzioni',
-                    surname: 'Software',
-                    address: 'Via dei Ronchi 21',
-                    sex: 'male',
-                    color: 'blue' 
-                });
-            }
-            else {
-                var newInfo = personalInfoStore.getAt(0);
-            }
-            
-            var fileDemo = this.getFileDemoView();
-            fileDemo.setRecord(newInfo);
-        }
-        
+        console.log('onItemDiscloseCommand');
         home.setActiveItem(index+1);
     },
     

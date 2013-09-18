@@ -35,7 +35,7 @@ Ext.define('SensorDevice.view.CameraDemo', {
             {
                 xtype: 'button',
                 itemId: 'cameraButton',
-                text: 'Take a picture using Sencha\'s APIs',
+                text: 'Take a picture',
                 margin: '0 0 10 0',
                 height: 40
             },
@@ -45,7 +45,7 @@ Ext.define('SensorDevice.view.CameraDemo', {
             {
                 xtype: 'button',
                 itemId: 'galleryButton',
-                text: 'Load from gallery using Sencha\'s APIs',
+                text: 'Load from gallery',
                 margin: '0 0 50 0',
                 height: 40
             }
