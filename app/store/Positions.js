@@ -15,6 +15,6 @@ Ext.define('SensorDevice.store.Positions', {
         proxy: {
             type: 'sql',
             database: 'SensorDeviceDb'
-        },
+        }
     }
 });

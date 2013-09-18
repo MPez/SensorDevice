@@ -36,7 +36,7 @@ Ext.define('SensorDevice.view.Main', {
                 
                 items:
                 { xtype: 'gallerydemo' }
-            },
+            }
             /*
              * Pagina che visualizza l'app MyNotes che utilizza il SyncEngine
              *

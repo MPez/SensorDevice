@@ -247,7 +247,7 @@ Ext.define('SensorDevice.view.Home', {
                 delegate: '#backGeolocationButton',
                 event: 'tap',
                 fn: 'onBackGeolocationButton'
-            },
+            }
         ]
     },
     
@@ -362,5 +362,5 @@ Ext.define('SensorDevice.view.Home', {
          * @param {Ext.Component} this
          */
         this.fireEvent('backGeolocationCommand', this);
-    },
+    }
 });

@@ -36,7 +36,7 @@ Ext.define('SensorDevice.controller.SensorDevices', {
                 locationCommand: 'onLocationCommand',
                 mapRenderCommand: 'onMapRenderCommand',
                 positionCommand: 'onPositionCommand',
-                backGeolocationCommand: 'onBackGeolocationCommand',
+                backGeolocationCommand: 'onBackGeolocationCommand'
             },
             cameraDemoView: {
                 cameraButtonCommand: 'onCameraButtonCommand',
