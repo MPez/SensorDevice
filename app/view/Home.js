@@ -30,10 +30,10 @@ Ext.define('SensorDevice.view.Home', {
         
         items: [
             /*
-            * item 0
-            * Pagina principale dell'app, contiene la barra del titolo e la lista
-            * che descrive e permette di selezionare le diverse funzionalità implementate.
-            */
+             * item 0
+             * Pagina principale dell'app, contiene la barra del titolo e la lista
+             * che descrive e permette di selezionare le diverse funzionalità implementate.
+             */
             {
                 items: [
                     {
@@ -56,20 +56,20 @@ Ext.define('SensorDevice.view.Home', {
                 ]
             },
             /*
-            * item 1
-            * sensorList index 0
-            * Pagina dimostrativa delle funzionalità di cattura immagine da fotocamera o da galleria.
-            */
+             * item 1
+             * sensorList index 0
+             * Pagina dimostrativa delle funzionalità di cattura immagine da fotocamera o da galleria.
+             */
             {
                 items: 
                 { xtype: 'camerademo' }
             },
             /*
-            * item 2
-            * sensorList index 1
-            * Pagina dimostrativa che permette di recuperare l'elenco dei contatti dal dispositivo
-            * e di visualizzarli in una lista ordinata.
-            */
+             * item 2
+             * sensorList index 1
+             * Pagina dimostrativa che permette di recuperare l'elenco dei contatti dal dispositivo
+             * e di visualizzarli in una lista ordinata.
+             */
             {
                 items: [
                     {
@@ -100,7 +100,7 @@ Ext.define('SensorDevice.view.Home', {
                     },
                     {
                         xtype: 'list',
-                        itemTpl: '{First} {Last}',
+                        itemTpl: '{name} {surname}',
                         itemId: 'contactsList',
                         /**
                         * @cfg {String} height Proprietà CSS che identifica l'altezza del Container;
@@ -116,11 +116,41 @@ Ext.define('SensorDevice.view.Home', {
                 ]
             },
             /*
-            * item 3
-            * sensorList index 2
-            * Pagina che visualizza una mappa tramite le Google Maps API e permette di individuare
-            * la posizione attuale del dispositivo e di salvarla in uno store.
-            */
+             * item 3
+             * sensorList index 2
+             * Pagina che visualizza le informazioni riguardanti la connessione in atto del dispositivo.
+             */
+            {
+                items: [
+                    {
+                        xtype: 'titlebar',
+                        docked: 'top',
+                        title: 'Connection',
+                        defaults: {
+                            xtype: 'button',
+                            iconMask: true
+                        },
+                        items: [
+                            {
+                                itemId: 'backButton',
+                                ui: 'back',
+                                iconCls: 'arrow_left'
+                            },
+                            {
+                                itemId: 'connectionButton',
+                                iconCls: 'refresh',
+                                align: 'right'
+                            }
+                        ]
+                    }
+                ]
+            },
+            /*
+             * item 4
+             * sensorList index 3
+             * Pagina che visualizza una mappa tramite le Google Maps API e permette di individuare
+             * la posizione attuale del dispositivo e di salvarla in uno store.
+             */
             {
                 items: [
                     {
@@ -167,10 +197,10 @@ Ext.define('SensorDevice.view.Home', {
                 ]
             },
             /*
-            * item 4
-            * Pagina relativa alle posizioni salvate tramite la geolocalizzazione del dispositivo,
-            * tali informazioni vengono visualizzate su una lista.
-            */
+             * item 5
+             * Pagina relativa alle posizioni salvate tramite la geolocalizzazione del dispositivo,
+             * tali informazioni vengono visualizzate su una lista.
+             */
             {
                 items: [
                     {
@@ -227,6 +257,11 @@ Ext.define('SensorDevice.view.Home', {
                 delegate: '#trashContactsButton',
                 event: 'tap',
                 fn: 'onTrashContactsButton'
+            },
+            {
+                delegate: '#connectionButton',
+                event: 'tap',
+                fn: 'onConnectionButton'
             },
             {
                 delegate: '#locationButton',
@@ -292,6 +327,20 @@ Ext.define('SensorDevice.view.Home', {
          * @param {Ext.Component} this
          */
         this.fireEvent('loadContactsCommand', this);
+    },
+    
+    /**
+     * Metodo che cattura l'evento tap del pulsante di recupero informazioni sulla connessione
+     * del dispositivo; rilancia l'evento che verrà catturato dal controller.
+     */
+    onConnectionButton: function() {
+        console.log('onConnectionButton');
+        /**
+         * @event
+         * Lanciato alla pressione del pulsante di recupero informazioni sulla connessione.
+         * @param {Ext.Component} this
+         */
+        this.fireEvent('connectionCommand', this);  
     },
     
     /**

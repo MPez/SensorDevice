@@ -33,6 +33,7 @@ Ext.define('SensorDevice.controller.SensorDevices', {
                 backButtonCommand: 'onBackButtonCommand',
                 loadContactsCommand: 'onLoadContactsCommand',
                 trashContactsCommand: 'onTrashContactsCommand',
+                connectionCommand: 'onConnectionCommand',
                 locationCommand: 'onLocationCommand',
                 mapRenderCommand: 'onMapRenderCommand',
                 positionCommand: 'onPositionCommand',
@@ -153,18 +154,55 @@ Ext.define('SensorDevice.controller.SensorDevices', {
     //             Sencha Touch Device Contacts             //
     //------------------------------------------------------//
     
-    /**
+     /**
      * Metodo che cattura l'evento di caricamento dei contatti del dispositivo;
-     * agisce effettuando una chiamata al metodo getContacts che ritorna l'elenco dei contatti
-     * presenti nel dispositivo; una volta recuperati i contatti vengono salvati sullo store dedicato.
+     * agisce effettuando una chiamata al metodo getContacts passando come parametri
+     * le funzioni di successo e fallimento e un'opzione per il recupero dell'immagine del contatto.
      */
     onLoadContactsCommand: function() {
         console.log('onLoadContactsCommand');
         
+        var me = this;
+        
+        Ext.device.Contacts.getContacts({
+            includeImages: false,
+            success: me.onGetContactsSuccess,
+            failure: me.onGetContactsFailure
+        });
+        
+    },
+    
+    /**
+     * Metodo che gestisce il successo dell'operazione di recupero dei contatti dalla rubrica del dispositivo;
+     * una volta recuperati i contatti vengono salvati sullo store dedicato.
+     */
+    onGetContactsSuccess: function(contacts) {
+        console.log('onGetContactsSuccess');
+        
         var contactsStore = Ext.getStore('Contacts');
-        var contacts = Ext.device.Contacts.getContacts(true);
-        contactsStore.add(contacts);
+        
+        for (var i = 0; i < contacts.length; i++) {
+            var deviceContact = contacts[i];
+            
+            var contact = Ext.create('SensorDevice.model.Contact', {
+                name: deviceContact.name,
+                surname: deviceContact.last,
+                email: deviceContact.emails,
+                address: deviceContact.address,
+                phoneNumber: deviceContact.phoneNumbers
+            });
+            contactsStore.add(contact);
+        }
         contactsStore.sync();
+    },
+    
+    /**
+     * Metodo che gestisce il fallimento dell'operazione di recupero dei contatti dal dispositivo;
+     * agisce visualizzando un messaggio dell'errore all'utente.
+     */
+    onGetContactsFailure: function(error) {
+        console.log('onGetContactsFailure');
+        Ext.Msg.alert('Error', error);
     },
     
     /**
@@ -175,6 +213,22 @@ Ext.define('SensorDevice.controller.SensorDevices', {
         var contactsStore = Ext.getStore('Contacts');
         contactsStore.removeAll();
         contactsStore.sync();
+    },
+    
+    //------------------------------------------------------//
+    //           Sencha Touch Device Connection             //
+    //------------------------------------------------------//
+    
+    /**
+     * Metodo che cattura l'evento di recupero informazioni sulla connessione del dispositivo.
+     */
+    onConnectionCommand: function() {
+        console.log('onConnectionCommand');
+        
+        var online = Ext.device.Connection.isOnline();
+        var type = Ext.device.Connection.getType();
+        
+        Ext.Msg.alert('Connection information', 'The device is online: ' + online + ', Connection type: ' + type);
     },
     
     //------------------------------------------------------//
@@ -195,9 +249,7 @@ Ext.define('SensorDevice.controller.SensorDevices', {
         Ext.device.Geolocation.getCurrentPosition(
             {
                 success: me.onLocationSuccess,
-                failure: me.onLocationFailure,
-                scope: me,
-                allowHighAccuracy: true
+                failure: me.onLocationFailure
             }
         );
     },
@@ -211,7 +263,6 @@ Ext.define('SensorDevice.controller.SensorDevices', {
      */
     onLocationSuccess: function(position) {
         console.log('onLocationSuccess');
-        console.log(position);
         
         var positionStore = Ext.getStore('Positions');
         var newPosition = Ext.create('SensorDevice.model.Position', {
@@ -227,7 +278,7 @@ Ext.define('SensorDevice.controller.SensorDevices', {
         positionStore.add(newPosition);
         positionStore.sync();
         
-        var mapCmp = this.getHomeView().getAt(3).getComponent('map');
+        var mapCmp = Ext.ComponentQuery.query('#map')[0];
         mapCmp.setMapCenter(position.coords);
         mapCmp.setMapOptions({
             zoom: 15
@@ -262,7 +313,7 @@ Ext.define('SensorDevice.controller.SensorDevices', {
      */
     onPositionCommand: function(home) {
         console.log('onPositionCommand');
-        home.setActiveItem(4);
+        home.setActiveItem(5);
     },
     
     /**
@@ -270,7 +321,7 @@ Ext.define('SensorDevice.controller.SensorDevices', {
      */
     onBackGeolocationCommand: function(home) {
         console.log('onBackGeolocationCommand');
-        home.setActiveItem(3);
+        home.setActiveItem(4);
     },
     
     /**
@@ -290,5 +341,6 @@ Ext.define('SensorDevice.controller.SensorDevices', {
         
         Ext.getStore('Pictures').load();
         Ext.getStore('Positions').load();
+        Ext.getStore('Contacts').load();
     }
 });

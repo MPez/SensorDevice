@@ -15,8 +15,11 @@ Ext.define('SensorDevice.model.Contact', {
          * Campi dati.
          */
         fields: [
-            {name: 'First', type: 'string'},
-            {name: 'Last' , type:'string'}
+            {name: 'name', type: 'string'},
+            {name: 'surname' , type:'string'},
+            {name: 'email' , type:'string'},
+            {name: 'address', type: 'string'},
+            {name: 'phoneNumber', type: 'string'}
         ]
     }
 });
